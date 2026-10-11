@@ -24,6 +24,7 @@ request:function(m,pkId){var p=db.get('packages',pkId);if(!p||p.price==null||!p.
  var t=db.add('transactions',{no:'TRX-'+Date.now().toString(36).toUpperCase(),memberId:m.id,memberName:m.name,packageId:p.id,packageName:p.name,amount:p.price,date:db.today(),method:'Transfer (simulasi)',status:'menunggu',note:''});db.log('Pengajuan paket',p.name);return t}
 };
 d.addEventListener('DOMContentLoaded',function(){
+d.querySelectorAll('input[type=password]').forEach(function(i){var b=d.createElement('button');b.type='button';b.className='pwt';b.textContent='Lihat';b.onclick=function(){var h=i.type==='password';i.type=h?'text':'password';b.textContent=h?'Sembunyi':'Lihat'};i.parentNode.style.position='relative';i.parentNode.appendChild(b)});
 var lf=d.getElementById('loginForm'),rf=d.getElementById('regForm');
 function errs(f,e){f.querySelectorAll('.err').forEach(function(x){x.textContent=''});for(var k in e){var x=f.querySelector('[data-e="'+k+'"]');if(x)x.textContent=e[k];else FF.toast(e[k],'err')}}
 if(lf)lf.addEventListener('submit',function(ev){ev.preventDefault();var b=lf.querySelector('button');if(b.disabled)return;b.disabled=true;b.textContent='Memproses…';

@@ -17,7 +17,7 @@ get:function(c,id){return db.list(c).filter(function(x){return x.id===id})[0]||n
 add:function(c,o){var l=db.list(c);o.id=o.id||uid(c[0]);o.createdAt=o.updatedAt=new Date().toISOString();l.push(o);return wr(c,l)?o:null},
 upd:function(c,id,p){var l=db.list(c),o=null;l.forEach(function(x){if(x.id===id){for(var k in p)x[k]=p[k];x.updatedAt=new Date().toISOString();o=x}});return o&&wr(c,l)?o:null},
 del:function(c,id){return wr(c,db.list(c).filter(function(x){return x.id!==id}))},
-settings:function(){return rd('settings',{})},
+settings:function(){var o=rd('settings',{}),r={},k;if(!o||typeof o!=='object')o={};for(k in DS)r[k]=(o[k]==null||o[k]==='')?DS[k]:o[k];return r},
 saveSettings:function(s){return wr('settings',s)},
 session:function(){return rd('session',null)},
 setSession:function(s){return s?wr('session',s):(ok?localStorage.removeItem(NS+'session'):delete mem.session,true)},
@@ -29,6 +29,7 @@ setTx:function(id,st,note){var t=db.get('transactions',id);if(!t||t.status!=='me
   var base=(m.end&&m.end>today())?m.end:today();db.upd('members',m.id,{start:m.start&&m.end>today()?m.start:today(),end:addMonths(base,(+pk.months||0)+(+pk.bonus||0)),packageId:pk.id});}
  db.upd('transactions',id,{status:st,note:note||t.note||''});db.log('Pembayaran '+st,t.no);return true},
 reset:function(){if(ok){Object.keys(localStorage).forEach(function(k){if(k.indexOf(NS)===0)localStorage.removeItem(k)})}else mem={};seed()}};
+var DS={name:'FUN FITNESS',address:'Jl. Raya Kalisuren, Kalisuren, RT 02/RW 03, Tajur Halang, Kabupaten Bogor, Jawa Barat 16320',hours:'Setiap hari, 06.00–23.00',phone1:'08831-963-981',phone2:'0881-2254-258',ig:'https://www.instagram.com/funfitness_centre/',maps:'https://maps.app.goo.gl/sA8oo7rcE4yC8PFUA?g_st=ac',mgm:'Ajak 3 orang, dapat bonus membership 1 bulan.',mgmStatus:'Perlu konfirmasi ketentuan'};
 function seed(){
 if(rd('schema',0)>=1)return;var t=today();
 wr('packages',[
@@ -36,7 +37,7 @@ wr('packages',[
 {id:'p6',name:'Membership 6 Bulan',type:'member',price:null,months:6,bonus:2,active:true,popular:false,promoEnd:'2026-10-31',note:'Bonus 2 bulan sesuai poster. Harga dan ketentuan perlu dikonfirmasi.',demo:true},
 {id:'pt2',name:'Personal Training 2 Sesi',type:'pt',price:500000,months:0,bonus:1,active:true,popular:false,promoEnd:'',note:'Bonus membership 1 bulan sesuai poster.',demo:true},
 {id:'pt5',name:'Personal Training 5 Sesi',type:'pt',price:900000,months:0,bonus:1,active:true,popular:false,promoEnd:'',note:'Bonus membership 1 bulan sesuai poster.',demo:true}]);
-wr('settings',{name:'FUN FITNESS',address:'Jl. Raya Kalisuren, Kalisuren, RT 02/RW 03, Tajur Halang, Kabupaten Bogor, Jawa Barat 16320',hours:'Setiap hari, 06.00–23.00',phone1:'08831-963-981',phone2:'0881-2254-258',ig:'https://www.instagram.com/funfitness_centre/',maps:'https://maps.app.goo.gl/sA8oo7rcE4yC8PFUA?g_st=ac',mgm:'Ajak 3 orang, dapat bonus membership 1 bulan.',mgmStatus:'Perlu konfirmasi ketentuan'});
+wr('settings',DS);
 function M(id,n,u,pk,s,e){return{id:id,name:n,username:u,email:u+'@contoh.test',phone:'081200000'+id.slice(-3),passHash:hash('member123'),role:'member',packageId:pk,start:s,end:e,status:'ok',demo:true,createdAt:s+'T08:00:00.000Z',updatedAt:s+'T08:00:00.000Z'}}
 wr('members',[{id:'ADM-001',name:'Admin Demo',username:'admin',email:'admin@contoh.test',phone:'',passHash:hash('admin123'),role:'admin',status:'ok',demo:true,createdAt:t+'T00:00:00.000Z',updatedAt:t+'T00:00:00.000Z'},
 M('FF-0001','Budi Demo','budi','p3',addDays(t,-30),addDays(t,60)),M('FF-0002','Sari Demo','sari','p3',addDays(t,-85),addDays(t,3)),M('FF-0003','Andi Demo','andi','p3',addDays(t,-130),addDays(t,-10))]);

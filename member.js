@@ -3,7 +3,7 @@ d.addEventListener('DOMContentLoaded',function(){
 var u=FF.auth.guard('member');if(!u)return;var db=FF.db,root=d.getElementById('root');
 function draw(){u=db.get('members',u.id)||u;var st=db.status(u),pk=db.get('packages',u.packageId),days=u.end?Math.ceil((new Date(u.end+'T00:00:00')-new Date(db.today()+'T00:00:00'))/864e5):null;
 var tx=db.list('transactions').filter(function(t){return t.memberId===u.id}).reverse(),vs=db.list('visits').filter(function(v){return v.memberId===u.id}).reverse();
-var pend=tx.some(function(t){return t.status==='menunggu'});
+var rem=st==='akan berakhir'?'<div class="alert y">Membership berakhir '+FF.tgl(u.end)+' ('+days+' hari lagi). Ajukan perpanjangan di bawah.</div>':st==='kedaluwarsa'?'<div class="alert r">Membership sudah kedaluwarsa. Ajukan paket baru di bawah.</div>':'';var pend=tx.some(function(t){return t.status==='menunggu'});
 root.innerHTML='<div class="dh"><img class="logo" src="logo.png" alt="FUN FITNESS"><h1>Halo, '+FF.esc(u.name)+'</h1><div class="sp"><button class="btn s" id="theme">☀/☾</button><button class="btn s" id="out">Logout</button></div></div>'+
 '<div class="sim">SIMULASI — belum terhubung dengan pembayaran online. Masa aktif hanya berubah setelah admin menyetujui pembayaran.</div>'+
 '<div class="grid"><div class="card stat">ID Member<b>'+u.id+'</b></div><div class="card stat">Status<b>'+FF.badge(st)+'</b></div><div class="card stat">Paket<b>'+(pk?FF.esc(pk.name):'—')+'</b></div><div class="card stat">Berakhir<b>'+FF.tgl(u.end)+'</b>'+(days!=null?(days>=0?days+' hari lagi':'lewat '+(-days)+' hari'):'')+'</div></div><br>'+
