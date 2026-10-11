@@ -19,3 +19,16 @@ Daftar member → login → ajukan paket → admin setujui (masa aktif bertambah
 ## Redesign 2026
 Foto yang perlu diunggah ke root: `hero-gym.jpg`, `gym-interior.jpg`, `gym-treadmill.jpg`, `gym-dumbbell.jpg`, `gym-mesin.jpg` (jika belum ada, galeri menampilkan placeholder bertuliskan nama file). `logo.png` dipakai juga untuk pratinjau WhatsApp (Open Graph); disarankan membuat `og.jpg` 1200x630.
 Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser admin saja. Pengunjung lain tetap melihat data awal sampai sistem dipindah ke Firebase.
+
+## Final polish (v3)
+- Modal untuk perpanjang, hapus, setujui/tolak pembayaran, edit member, dan reset (tanpa `prompt()`).
+- Tabel menjadi kartu di layar ≤600px. Dashboard admin: pengingat membership akan berakhir (tautan WhatsApp) dan ringkasan pembayaran.
+- Galeri hanya menampilkan foto yang ada; jika belum ada foto sama sekali, tampil pesan "segera hadir".
+- Foto yang perlu diunggah ke root: `hero-gym.jpg`, `gym-interior.jpg`, `gym-treadmill.jpg`, `gym-dumbbell.jpg`, `gym-mesin.jpg`. Gunakan JPEG/WebP ≤200 KB (hero ≤300 KB, lebar 1600px).
+- Kompatibilitas: butuh browser setara Chrome 80+/Firefox 78+ (fallback ukuran font untuk `clamp()` sudah ada). Belum diuji di Windows 7 sungguhan.
+- Jika di HP tampil seperti desktop, matikan "Situs desktop" di menu browser.
+
+## v4 — Tampilan canggih + loading screen
+- `loader.js`: loading screen 3 detik (logo + progress bar), tampil sekali per sesi browser/tab. Untuk menonton lagi, buka tab baru. Tema gelap/terang kini diterapkan sebelum halaman tampil (tanpa kedip).
+- Hero baru (glow merah, watermark logo, huruf miring), strip info berjalan, bar CTA bawah di HP (Daftar + WhatsApp).
+- Kartu member digital dengan bar sisa masa aktif; statistik 2 kolom di HP; tombol aksi tabel di HP tersusun rapi.

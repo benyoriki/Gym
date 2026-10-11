@@ -35,8 +35,8 @@ if(rd('schema',0)>=1)return;var t=today();
 wr('packages',[
 {id:'p3',name:'Membership 3 Bulan',type:'member',price:450000,months:3,bonus:1,active:true,popular:true,promoEnd:'2026-10-31',note:'Promo Oktober: bonus 1 bulan. Ketentuan perlu dikonfirmasi.',demo:true},
 {id:'p6',name:'Membership 6 Bulan',type:'member',price:null,months:6,bonus:2,active:true,popular:false,promoEnd:'2026-10-31',note:'Bonus 2 bulan sesuai poster. Harga dan ketentuan perlu dikonfirmasi.',demo:true},
-{id:'pt2',name:'Personal Training 2 Sesi',type:'pt',price:500000,months:0,bonus:1,active:true,popular:false,promoEnd:'',note:'Bonus membership 1 bulan sesuai poster.',demo:true},
-{id:'pt5',name:'Personal Training 5 Sesi',type:'pt',price:900000,months:0,bonus:1,active:true,popular:false,promoEnd:'',note:'Bonus membership 1 bulan sesuai poster.',demo:true}]);
+{id:'pt2',name:'Personal Training 2 Sesi',type:'pt',price:500000,months:0,bonus:1,active:true,popular:false,promoEnd:'',note:'Bonus membership 1 bulan sesuai poster; ketentuan resmi perlu dikonfirmasi.',demo:true},
+{id:'pt5',name:'Personal Training 5 Sesi',type:'pt',price:900000,months:0,bonus:1,active:true,popular:false,promoEnd:'',note:'Bonus membership 1 bulan sesuai poster; ketentuan resmi perlu dikonfirmasi.',demo:true}]);
 wr('settings',DS);
 function M(id,n,u,pk,s,e){return{id:id,name:n,username:u,email:u+'@contoh.test',phone:'081200000'+id.slice(-3),passHash:hash('member123'),role:'member',packageId:pk,start:s,end:e,status:'ok',demo:true,createdAt:s+'T08:00:00.000Z',updatedAt:s+'T08:00:00.000Z'}}
 wr('members',[{id:'ADM-001',name:'Admin Demo',username:'admin',email:'admin@contoh.test',phone:'',passHash:hash('admin123'),role:'admin',status:'ok',demo:true,createdAt:t+'T00:00:00.000Z',updatedAt:t+'T00:00:00.000Z'},
