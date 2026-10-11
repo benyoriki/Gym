@@ -32,3 +32,19 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - `loader.js`: loading screen 3 detik (logo + progress bar), tampil sekali per sesi browser/tab. Untuk menonton lagi, buka tab baru. Tema gelap/terang kini diterapkan sebelum halaman tampil (tanpa kedip).
 - Hero baru (glow merah, watermark logo, huruf miring), strip info berjalan, bar CTA bawah di HP (Daftar + WhatsApp).
 - Kartu member digital dengan bar sisa masa aktif; statistik 2 kolom di HP; tombol aksi tabel di HP tersusun rapi.
+
+## v5
+- Tombol "Kembali ke beranda" di login dan register.
+- Beranda: section "Sedang di gym" = member yang di-check-in admin dalam 3 jam terakhir (nama depan, foto, level). Hanya tampil jika member mengizinkan (kotak centang di dashboard member, default aktif). Data berasal dari localStorage browser yang sama.
+- Dashboard member: foto profil dengan crop bulat (geser + zoom), otomatis WebP 256x256 (fallback JPEG), level (Lv1 Pemula 0–4 kunjungan, Lv2 Rutin 5–14, Lv3 Konsisten 15–29, Lv4 Atlet 30–59, Lv5 Elite 60+), peringkat, dan Top 5.
+- Admin: drawer HP punya latar redup dan menutup saat disentuh di luar; angka statistik menghitung naik.
+
+## v6
+- Logo baru (emblem sayap) di semua tempat: `logo.png`, `favicon.png`, ikon PWA (`icon-192/512/maskable`, `icon-180`), `og.png` (pratinjau WhatsApp). Nama "FUN FITNESS" tampil di navbar, login, sidebar admin, dashboard member, footer, dan loading screen.
+- Admin → Laporan: **Unduh PDF** (A4, header merah, kartu ringkasan, tabel penjualan/transaksi/member yang perlu ditindaklanjuti) dan **Unduh Excel** (.xlsx asli, 4 sheet: Ringkasan, Transaksi, Member, Kunjungan). Dibuat di browser, tanpa library. Data sesuai filter periode.
+- **PWA**: `manifest.webmanifest`, `sw.js` (cache offline), `pwa.js` (tombol "Pasang Aplikasi"). Syarat: dibuka lewat HTTPS (GitHub Pages sudah HTTPS), bukan file://.
+  - Android Chrome: tombol "Pasang Aplikasi" atau menu ⋮ → Instal aplikasi.
+  - Windows 7: gunakan Chrome versi terakhir yang masih mendukung Windows 7 (109) atau Edge setara → menu ⋮ → Instal FUN FITNESS. Firefox desktop tidak mendukung pasang PWA.
+  - iPhone: Safari → Bagikan → Tambah ke Layar Utama.
+  - Setelah mengubah file, naikkan `V` di `sw.js` (mis. `ff-v7`) agar pengguna mendapat versi terbaru.
+- Dashboard member: dua kolom di PC; avatar daftar Top 5 tidak lagi lonjong.

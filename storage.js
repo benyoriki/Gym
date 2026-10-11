@@ -23,6 +23,10 @@ session:function(){return rd('session',null)},
 setSession:function(s){return s?wr('session',s):(ok?localStorage.removeItem(NS+'session'):delete mem.session,true)},
 log:function(type,detail){var s=db.session();var l=db.list('logs');l.push({id:uid('l'),at:new Date().toISOString(),type:type,detail:detail||'',user:s?s.id:'-'});wr('logs',l.slice(-300))},
 nextMemberId:function(){var n=db.list('members').length+1,id;do{id='FF-'+('0000'+n).slice(-4);n++}while(db.get('members',id));return id},
+level:function(n){var L=[[0,'Pemula'],[5,'Rutin'],[15,'Konsisten'],[30,'Atlet'],[60,'Elite']],i=0;while(i<L.length-1&&n>=L[i+1][0])i++;return{lv:i+1,name:L[i][1],from:L[i][0],next:L[i+1]?L[i+1][0]:null}},
+counts:function(){var c={};db.list('visits').forEach(function(v){c[v.memberId]=(c[v.memberId]||0)+1});return c},
+rank:function(id){var c=db.counts(),me=c[id]||0,r=1,k;for(k in c)if(c[k]>me)r++;return r},
+onsite:function(h){var t=Date.now()-(h||3)*36e5,seen={},out=[];db.list('visits').slice().reverse().forEach(function(v){if(new Date(v.at).getTime()>=t&&!seen[v.memberId]){seen[v.memberId]=1;var m=db.get('members',v.memberId);if(m&&m.status!=='nonaktif'&&m.showPublic!==false)out.push(m)}});return out},
 status:function(m){if(m.status==='nonaktif')return'nonaktif';if(!m.end)return'menunggu';var t=today();if(m.end<t)return'kedaluwarsa';if(m.end<=addDays(t,7))return'akan berakhir';return'aktif'},
 setTx:function(id,st,note){var t=db.get('transactions',id);if(!t||t.status!=='menunggu')return false; /* cegah proses ganda */
  if(st==='disetujui'){var m=db.get('members',t.memberId),pk=db.get('packages',t.packageId);if(!m||!pk)return false;
