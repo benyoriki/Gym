@@ -1,0 +1,2 @@
+.auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.auth .card{width:100%;max-width:440px}.auth .logo{margin:0 auto 16px}.demo{font-size:13px;background:var(--bg);border:1px dashed var(--bd);border-radius:8px;padding:8px;margin-top:12px}

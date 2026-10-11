@@ -1,0 +1,6 @@
+.app{display:flex;min-height:100vh}.side{width:220px;background:#000;color:#ddd;padding:14px;flex-shrink:0}.side button{display:block;width:100%;text-align:left;background:none;border:0;color:#ddd;padding:10px;border-radius:8px;cursor:pointer;font:inherit}.side button.on,.side button:hover{background:var(--pri);color:#fff}
+.mainc{flex:1;min-width:0}.top{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--card);border-bottom:1px solid var(--bd)}.top .sp{margin-left:auto;display:flex;gap:8px;align-items:center}#sb{display:none}
+#main{padding:16px}.stat b{display:block;font-size:24px}.bar{height:10px;background:var(--pri);border-radius:5px;min-width:2px}.row2{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}.row2 input,.row2 select{width:auto;flex:1;min-width:140px}
+td input{min-width:90px}
+@media(max-width:767px){.side{position:fixed;left:-230px;top:0;bottom:0;z-index:20;transition:left .2s}body.side-open .side{left:0}#sb{display:inline-block}}
+@media print{.side,.top,.row2,.noprint{display:none!important}body{background:#fff;color:#000}}

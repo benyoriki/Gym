@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Daftar Member — FUN FITNESS</title><link rel="icon" href="favicon.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="auth.css"></head><body><div class="auth"><div class="card">
+<a href="index.html"><img class="logo" src="logo.png" alt="FUN FITNESS"></a><h2>Daftar Member</h2>
+<form id="regForm" novalidate>
+<div class="field"><label for="name">Nama lengkap</label><input id="name"><div class="err" data-e="name"></div></div>
+<div class="field"><label for="username">Username</label><input id="username" autocapitalize="none"><div class="err" data-e="username"></div></div>
+<div class="field"><label for="email">Email</label><input id="email" type="email"><div class="err" data-e="email"></div></div>
+<div class="field"><label for="phone">Nomor HP</label><input id="phone" type="tel"><div class="err" data-e="phone"></div></div>
+<div class="field"><label for="password">Password</label><input id="password" type="password"><div class="err" data-e="password"></div></div>
+<div class="field"><label for="password2">Konfirmasi password</label><input id="password2" type="password"><div class="err" data-e="password2"></div></div>
+<div class="field"><label for="pkg">Paket membership</label><select id="pkg"><option value="">Pilih nanti</option></select></div>
+<div class="field"><label><input type="checkbox" id="agree" style="width:auto"> Saya menyetujui syarat penggunaan dan privasi</label><div class="err" data-e="agree"></div></div>
+<button class="btn p" style="width:100%">Daftar</button></form>
+<p>Sudah punya akun? <a href="login.html">Login</a></p><p class="demo">Prototype: data tersimpan di browser ini saja dan tidak terlihat oleh admin di perangkat lain.</p></div></div>
+<script src="storage.js"></script><script src="app.js"></script><script src="auth.js"></script></body></html>

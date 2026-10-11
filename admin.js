@@ -1,0 +1,65 @@
+(function(d){
+d.addEventListener('DOMContentLoaded',function(){
+var u=FF.auth.guard('admin');if(!u)return;var db=FF.db,E=FF.esc,main=d.getElementById('main'),view='overview',q='',per='month',cq='';
+var T={overview:'Overview',members:'Member',payments:'Pembayaran',packages:'Paket & Promo',visits:'Kunjungan',reports:'Laporan',settings:'Pengaturan',logs:'Audit Log'};
+function mem(){return db.list('members').filter(function(m){return m.role==='member'})}
+function tbl(h,rows){return'<div class="tw"><table><tr>'+h.map(function(x){return'<th>'+x+'</th>'}).join('')+'</tr>'+(rows.join('')||'<tr><td colspan="'+h.length+'">Tidak ada data.</td></tr>')+'</table></div>'}
+function stat(l,v){return'<div class="card stat">'+l+'<b>'+v+'</b></div>'}
+function has(o,s){return JSON.stringify(o).toLowerCase().indexOf(s.toLowerCase())>-1}
+function range(p){var t=db.today(),y=t.slice(0,4),m=t.slice(0,7);if(p==='today')return[t,t];if(p==='7d')return[db.addDays(t,-6),t];if(p==='month')return[m+'-01',t];if(p==='year')return[y+'-01-01',t];return['0000-01-01',t]}
+function overview(){var ms=mem(),t=db.today(),tx=db.list('transactions'),c={};ms.forEach(function(m){var s=db.status(m);c[s]=(c[s]||0)+1});
+var rev=tx.filter(function(x){return x.status==='disetujui'}).reduce(function(a,x){return a+x.amount},0);
+var bars=['aktif','akan berakhir','kedaluwarsa','menunggu','nonaktif'].map(function(s){var n=c[s]||0;return'<div>'+s+' ('+n+')<div class="bar" style="width:'+(ms.length?n/ms.length*100:0)+'%"></div></div>'}).join('');
+return'<div class="grid">'+stat('Total member',ms.length)+stat('Member aktif',c.aktif||0)+stat('Akan berakhir',c['akan berakhir']||0)+stat('Kedaluwarsa',c.kedaluwarsa||0)+stat('Member baru bulan ini',ms.filter(function(m){return m.createdAt.slice(0,7)===t.slice(0,7)}).length)+stat('Transaksi menunggu',tx.filter(function(x){return x.status==='menunggu'}).length)+stat('Pendapatan tercatat (disetujui)',FF.rp(rev))+stat('Kunjungan hari ini',db.list('visits').filter(function(v){return v.at.slice(0,10)===t}).length)+'</div><br><div class="card"><h3>Distribusi status membership</h3>'+(ms.length?bars:'<p class="mut">Belum ada member.</p>')+'</div>'}
+function mlist(){var l=mem().filter(function(m){return!q||has([m.id,m.name,m.phone,m.email],q)});
+return tbl(['ID','Nama','HP','Email','Paket','Daftar','Berakhir','Status','Aksi'],l.map(function(m){var p=db.get('packages',m.packageId);return'<tr><td>'+m.id+(m.demo?' <span class="bd y">DEMO</span>':'')+'</td><td>'+E(m.name)+'</td><td>'+E(m.phone)+'</td><td>'+E(m.email)+'</td><td>'+(p?E(p.name):'—')+'</td><td>'+FF.tgl(m.createdAt)+'</td><td>'+FF.tgl(m.end)+'</td><td>'+FF.badge(db.status(m))+'</td><td><button class="btn s" data-a="ext" data-id="'+m.id+'">Perpanjang</button> <button class="btn s" data-a="tog" data-id="'+m.id+'">'+(m.status==='nonaktif'?'Aktifkan':'Nonaktifkan')+'</button> <button class="btn s" data-a="del" data-id="'+m.id+'">Hapus</button></td></tr>'}))}
+function members(){return'<div class="row2"><input id="q" placeholder="Cari ID, nama, HP, email" value="'+E(q)+'"><button class="btn s" data-a="csvm">Ekspor CSV</button></div><div id="list">'+mlist()+'</div>'}
+function plist(){var l=db.list('transactions').filter(function(t){return!q||has(t,q)}).reverse();
+return tbl(['No','Member','Paket','Nominal','Tanggal','Metode','Status','Catatan','Aksi'],l.map(function(t){return'<tr><td>'+E(t.no)+'</td><td>'+E(t.memberId+' '+t.memberName)+'</td><td>'+E(t.packageName)+'</td><td>'+FF.rp(t.amount)+'</td><td>'+FF.tgl(t.date)+'</td><td>'+E(t.method)+'</td><td>'+FF.badge(t.status)+'</td><td>'+E(t.note)+'</td><td>'+(t.status==='menunggu'?'<button class="btn s p" data-a="ok" data-id="'+t.id+'">Setujui</button> <button class="btn s" data-a="no" data-id="'+t.id+'">Tolak</button>':'')+'</td></tr>'}))}
+function payments(){return'<div class="row2"><input id="q" placeholder="Cari transaksi" value="'+E(q)+'"><button class="btn s" data-a="csvt">Ekspor CSV</button></div><p class="mut">Pendapatan hanya dihitung dari transaksi berstatus disetujui.</p><div id="list">'+plist()+'</div>'}
+function packages(){return'<p class="mut">Ubah lalu klik Simpan. Perubahan langsung tampil di website publik (browser yang sama).</p><button class="btn s p" data-a="newp">Tambah paket</button>'+tbl(['Nama','Harga (kosong = belum dikonfirmasi)','Bulan','Bonus','Promo s.d.','Catatan','Aktif','Populer',''],db.list('packages').map(function(p){return'<tr data-pid="'+p.id+'"><td><input data-f="name" value="'+E(p.name)+'"></td><td><input data-f="price" type="number" min="0" value="'+(p.price==null?'':p.price)+'"></td><td><input data-f="months" type="number" min="0" value="'+p.months+'"></td><td><input data-f="bonus" type="number" min="0" value="'+p.bonus+'"></td><td><input data-f="promoEnd" type="date" value="'+(p.promoEnd||'')+'"></td><td><input data-f="note" value="'+E(p.note)+'"></td><td><input data-f="active" type="checkbox"'+(p.active?' checked':'')+'></td><td><input data-f="popular" type="checkbox"'+(p.popular?' checked':'')+'></td><td><button class="btn s p" data-a="savep" data-id="'+p.id+'">Simpan</button></td></tr>'}))}
+function vlist(){return tbl(['Waktu','ID','Nama'],db.list('visits').filter(function(v){return!q||v.at.slice(0,10)===q}).reverse().map(function(v){return'<tr><td>'+FF.jam(v.at)+'</td><td>'+v.memberId+'</td><td>'+E(v.name)+'</td></tr>'}))}
+function visits(){var res=cq?mem().filter(function(m){return has([m.id,m.name],cq)}).slice(0,5):[];
+return'<div class="card"><div class="row2"><input id="cq" placeholder="ID member atau nama" value="'+E(cq)+'"></div>'+res.map(function(m){return'<div class="row2"><span>'+m.id+' — '+E(m.name)+' '+FF.badge(db.status(m))+'</span><button class="btn s p" data-a="ci" data-id="'+m.id+'">Check-in</button></div>'}).join('')+'</div><br><div class="row2"><label>Filter tanggal <input id="vq" type="date" value="'+E(q)+'"></label></div><div id="list">'+vlist()+'</div>'}
+function rep(){var r=range(per),tx=db.list('transactions').filter(function(t){return t.date>=r[0]&&t.date<=r[1]}),ok=tx.filter(function(t){return t.status==='disetujui'}),vs=db.list('visits').filter(function(v){var x=v.at.slice(0,10);return x>=r[0]&&x<=r[1]}),ms=mem(),by={};
+ok.forEach(function(t){var b=by[t.packageName]=by[t.packageName]||{n:0,s:0};b.n++;b.s+=t.amount});
+return{rows:[['Total member',ms.length],['Member aktif',ms.filter(function(m){return db.status(m)==='aktif'}).length],['Member baru',ms.filter(function(m){var x=m.createdAt.slice(0,10);return x>=r[0]&&x<=r[1]}).length],['Member kedaluwarsa',ms.filter(function(m){return db.status(m)==='kedaluwarsa'}).length],['Total transaksi',tx.length],['Pendapatan terkonfirmasi',ok.reduce(function(a,t){return a+t.amount},0)],['Transaksi pending',tx.filter(function(t){return t.status==='menunggu'}).length],['Kunjungan',vs.length]],by:by}}
+function reports(){var R=rep(),o=[['today','Hari ini'],['7d','7 hari'],['month','Bulan ini'],['year','Tahun ini'],['all','Semua']];
+return'<div class="row2"><select id="per">'+o.map(function(x){return'<option value="'+x[0]+'"'+(x[0]===per?' selected':'')+'>'+x[1]+'</option>'}).join('')+'</select><button class="btn s" data-a="csvr">Ekspor CSV</button><button class="btn s" data-a="prt">Cetak</button></div>'+tbl(['Rekap','Nilai'],R.rows.map(function(r){return'<tr><td>'+r[0]+'</td><td>'+(r[0].indexOf('Pendapatan')===0?FF.rp(r[1]):r[1])+'</td></tr>'}))+'<h3>Penjualan per paket (disetujui)</h3>'+tbl(['Paket','Jumlah','Total'],Object.keys(R.by).map(function(k){return'<tr><td>'+E(k)+'</td><td>'+R.by[k].n+'</td><td>'+FF.rp(R.by[k].s)+'</td></tr>'}))}
+function settings(){var s=db.settings(),f=[['name','Nama bisnis'],['address','Alamat'],['hours','Jam operasional'],['phone1','Kontak 1'],['phone2','Kontak 2'],['ig','Instagram'],['maps','Google Maps'],['mgm','Info Member Get Member'],['mgmStatus','Status Member Get Member']];
+return'<div class="card" style="max-width:560px">'+f.map(function(x){return'<div class="field"><label>'+x[1]+'</label><input data-s="'+x[0]+'" value="'+E(s[x[0]])+'"></div>'}).join('')+'<button class="btn p" data-a="sets">Simpan</button> <button class="btn" data-a="cancel">Batalkan</button></div><br><div class="card"><b>Reset data demo</b><p class="mut">Menghapus SEMUA data di browser ini dan mengembalikan data demo.</p><button class="btn" data-a="reset">Reset data</button></div>'}
+function logs(){return'<p class="mut">Log berbasis localStorage dapat diubah pengguna; bukan bukti audit yang aman untuk produksi.</p>'+tbl(['Waktu','Aktivitas','Detail','Pengguna'],db.list('logs').slice().reverse().map(function(l){return'<tr><td>'+FF.jam(l.at)+'</td><td>'+E(l.type)+'</td><td>'+E(l.detail)+'</td><td>'+E(l.user)+'</td></tr>'}))}
+var V={overview:overview,members:members,payments:payments,packages:packages,visits:visits,reports:reports,settings:settings,logs:logs};
+function go(v){view=v;q='';cq='';draw()}
+function draw(){d.getElementById('crumb').textContent='Admin / '+T[view];d.querySelectorAll('[data-v]').forEach(function(b){b.className=b.getAttribute('data-v')===view?'on':''});main.innerHTML=V[view]();d.body.classList.remove('side-open')}
+FF.refresh=draw;draw();
+d.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){go(b.getAttribute('data-v'))})});
+d.getElementById('out').onclick=FF.auth.logout;d.getElementById('sb').onclick=function(){d.body.classList.toggle('side-open')};
+d.addEventListener('input',function(e){var i=e.target.id;
+if(i==='q'){q=e.target.value;d.getElementById('list').innerHTML=view==='members'?mlist():plist()}
+if(i==='vq'){q=e.target.value;d.getElementById('list').innerHTML=vlist()}
+if(i==='cq'){cq=e.target.value;var p=e.target.selectionStart;draw();var n=d.getElementById('cq');n.focus();n.setSelectionRange(p,p)}});
+d.addEventListener('change',function(e){if(e.target.id==='per'){per=e.target.value;draw()}});
+d.addEventListener('click',function(e){var b=e.target,a=b.getAttribute&&b.getAttribute('data-a');if(!a)return;var id=b.getAttribute('data-id');
+if(a==='ext'){var n=parseInt(prompt('Perpanjang berapa bulan?','1'),10);if(n>0){var m=db.get('members',id),base=(m.end&&m.end>db.today())?m.end:db.today();db.upd('members',id,{start:m.start||db.today(),end:db.addMonths(base,n)});db.log('Perpanjangan membership',id+' +'+n+' bln');draw()}}
+if(a==='tog'){var m2=db.get('members',id);db.upd('members',id,{status:m2.status==='nonaktif'?'ok':'nonaktif'});db.log('Ubah status akun',id);draw()}
+if(a==='del'&&confirm('Hapus member '+id+' beserta akunnya? Tindakan ini tidak dapat dibatalkan.')){db.del('members',id);db.log('Hapus member',id);draw()}
+if(a==='ok'){if(db.setTx(id,'disetujui'))FF.toast('Pembayaran disetujui, masa aktif diperbarui');draw()}
+if(a==='no'){var rs=prompt('Alasan penolakan:');if(rs){db.setTx(id,'ditolak',rs);draw()}}
+if(a==='newp'){db.add('packages',{name:'Paket baru',type:'member',price:null,months:1,bonus:0,active:false,popular:false,promoEnd:'',note:''});db.log('Perubahan paket','paket baru');draw()}
+if(a==='savep'){var row=b.closest('tr'),g=function(f){return row.querySelector('[data-f="'+f+'"]')},pr=g('price').value;
+ if(!g('name').value.trim())return FF.toast('Nama paket wajib diisi','err');
+ db.upd('packages',id,{name:g('name').value.trim(),price:pr===''?null:+pr,months:+g('months').value||0,bonus:+g('bonus').value||0,promoEnd:g('promoEnd').value,note:g('note').value,active:g('active').checked,popular:g('popular').checked});db.log('Perubahan paket',id);FF.toast('Paket disimpan')}
+if(a==='ci'){var m3=db.get('members',id),st=db.status(m3);
+ if(st==='kedaluwarsa'||st==='menunggu'||st==='nonaktif'){if(!confirm('Status member: '+st+'. Tetap check-in?'))return}
+ var last=db.list('visits').filter(function(v){return v.memberId===id}).pop();if(last&&Date.now()-new Date(last.at)<36e5&&!confirm('Member sudah check-in kurang dari 1 jam lalu. Catat lagi?'))return;
+ db.add('visits',{memberId:id,name:m3.name,at:new Date().toISOString()});db.log('Check-in',id);FF.toast('Check-in dicatat');cq='';draw()}
+if(a==='csvm')FF.csv('member.csv',[['ID','Nama','HP','Email','Berakhir','Status']].concat(mem().map(function(m){return[m.id,m.name,m.phone,m.email,m.end,db.status(m)]})));
+if(a==='csvt')FF.csv('transaksi.csv',[['No','ID Member','Nama','Paket','Nominal','Tanggal','Status','Catatan']].concat(db.list('transactions').map(function(t){return[t.no,t.memberId,t.memberName,t.packageName,t.amount,t.date,t.status,t.note]})));
+if(a==='csvr')FF.csv('laporan.csv',[['Rekap','Nilai']].concat(rep().rows));
+if(a==="prt")window.print();
+if(a==='sets'){var s=db.settings();d.querySelectorAll('[data-s]').forEach(function(i){s[i.getAttribute('data-s')]=i.value.trim()});if(!s.name||!s.address)return FF.toast('Nama dan alamat wajib diisi','err');if(db.saveSettings(s)){db.log('Perubahan pengaturan');FF.toast('Pengaturan disimpan')}}
+if(a==='cancel')draw();
+if(a==='reset'&&prompt('Ketik RESET untuk menghapus semua data di browser ini')==='RESET'){db.reset();location.href='login.html'}});
+});
+})(document);
