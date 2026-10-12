@@ -1,7 +1,7 @@
 (function(d){
 d.addEventListener('DOMContentLoaded',function(){
 var db=FF.db,s=db.settings(),t=db.today(),E=FF.esc,pk=db.list('packages').filter(function(p){return p.active});
-function wa(txt){var u=FF.wa(s.phone1);return u?u+'?text='+encodeURIComponent(txt):''}
+function wa(txt){var u=FF.wa(s[s.waPrimary||'phone1']||s.phone1);return u?u+'?text='+encodeURIComponent(txt):''}
 function card(p){var ended=p.promoEnd&&p.promoEnd<t,li=[],w=wa('Halo FUN FITNESS, saya mau tanya paket '+p.name);
 if(p.months)li.push(p.months+' bulan membership');if(p.bonus)li.push('Bonus '+p.bonus+' bulan membership');
 if(p.type==='pt'&&p.bonus)li.push('Ketentuan bonus menunggu konfirmasi resmi');if(p.promoEnd)li.push(ended?'Promo berakhir '+FF.tgl(p.promoEnd):'Promo berlaku s.d. '+FF.tgl(p.promoEnd));
@@ -16,7 +16,7 @@ function ons(){var l=db.onsite(3),c=db.counts(),e=d.getElementById('ons');d.getE
 e.innerHTML=l.length?l.slice(0,12).map(function(m){var L=db.level(c[m.id]||0);return'<div class="card oc">'+FF.av(m,'l')+'<b>'+E(FF.first(m.name))+'</b><span class="bd g">Lv '+L.lv+' · '+L.name+'</span>'+(m.demo?'<span class="bd y">DEMO</span>':'')+'</div>'}).join('')+(l.length>12?'<div class="card oc"><b>+'+(l.length-12)+'</b><span class="mut">lainnya</span></div>':''):'<div class="card oc" style="flex:1 1 100%">Jadilah yang pertama latihan hari ini.</div>'}
 ons();setInterval(ons,60000);FF.refresh=ons;
 var bw=d.getElementById('barWa');if(u)bw.href=u;else bw.style.display='none';var hw=d.getElementById('heroWa');if(u)hw.href=u;else hw.style.display='none';
-var ph=[s.phone1,s.phone2].filter(function(x){return x&&x.trim()}),h=ph.length?ph.map(function(x){var w=FF.wa(x);return w?'<a href="'+w+'" target="_blank" rel="noopener">'+E(x)+'</a>':E(x)}).join(' &nbsp;•&nbsp; '):'Kontak belum tersedia';
+var ph=[s.phone1,s.phone2,s.phone3].filter(function(x){return x&&x.trim()}),h=ph.length?ph.map(function(x){var w=FF.wa(x);return w?'<a href="'+w+'" target="_blank" rel="noopener">'+E(x)+'</a>':E(x)}).join(' &nbsp;•&nbsp; '):'Kontak belum tersedia';
 d.getElementById('contact').innerHTML=h;d.getElementById('fcontact').innerHTML=h;
 d.getElementById('year').textContent=new Date().getFullYear();
 var G=[['gym-interior.jpg','Interior FUN FITNESS'],['hero-gym.jpg','Area latihan FUN FITNESS'],['gym-treadmill.jpg','Treadmill'],['gym-dumbbell.jpg','Dumbbell'],['gym-mesin.jpg','Mesin latihan']],gl=d.getElementById('gal'),lb=d.getElementById('lb');
@@ -26,6 +26,16 @@ gl.querySelectorAll('img').forEach(function(i){i.addEventListener('error',functi
 gl.addEventListener('click',function(e){var i=e.target.tagName==='IMG'?e.target:null;if(i){lb.querySelector('img').src=i.src;lb.querySelector('img').alt=i.alt;lb.className='on'}});
 lb.addEventListener('click',function(){lb.className=''});d.addEventListener('keydown',function(e){if(e.key==='Escape')lb.className=''});
 d.querySelectorAll('.nav nav a').forEach(function(a){a.addEventListener('click',function(){d.body.classList.remove('menu')})});
+
+var regs=pk.filter(function(x){return x.type==='reguler'}),grp='dewasa';
+function reg(){var l=regs.filter(function(x){return x.group===grp}),e=d.getElementById('reg');e.innerHTML=l.length?l.map(function(x){var w=wa('Halo FUN FITNESS, saya mau tanya paket '+x.name),nm=x.name.indexOf(' - ')>-1?x.name.split(' - ')[1]:x.name;return'<article class="card rc'+(x.popular?' pop':'')+'">'+(x.popular?'<span class="bd g">Populer</span>':'')+'<b class="rd">'+E(nm)+'</b><div class="price">'+(x.price==null?'<small>Tanya admin</small>':FF.rp(x.price))+'</div><div class="acts">'+(x.price!=null?'<a class="btn p s" href="register.html?pkg='+encodeURIComponent(x.id)+'">Daftar</a>':'')+(w?'<a class="btn s" href="'+w+'" target="_blank" rel="noopener">Tanya</a>':'')+'</div></article>'}).join(''):'<p class="mut">Belum ada paket pada kategori ini.</p>'}
+[].forEach.call(d.querySelectorAll('.seg button'),function(b){b.addEventListener('click',function(){grp=b.getAttribute('data-g');[].forEach.call(d.querySelectorAll('.seg button'),function(x){x.className=x===b?'on':''});reg()})});reg();
+d.getElementById('regwrap').style.display=regs.length?'':'none';
+var fe=[];if(s.feeVisit!=null&&s.feeVisit!=='')fe.push(['Visit harian',FF.rp(+s.feeVisit)]);if(s.feeReg!=null&&s.feeReg!=='')fe.push(['Registrasi member baru',FF.rp(+s.feeReg)]);
+d.getElementById('fees').innerHTML=fe.map(function(x){return'<div class="tile"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join('');
+var ig=(s.ig||'').replace(/\/+$/,'').split('/').pop();d.getElementById('social').innerHTML=(s.ig?'<a href="'+E(s.ig)+'" target="_blank" rel="noopener">@'+E(ig)+'</a>':'')+(s.fbName?' &nbsp;&bull;&nbsp; Facebook: '+E(s.fbName):'');
+var shareUrl=location.href.split('#')[0].split('?')[0];
+[].forEach.call(d.querySelectorAll('.sharebtn'),function(b){b.addEventListener('click',function(e){e.preventDefault();var txt=s.shareText||'';if(navigator.share){navigator.share({title:'FUN FITNESS',text:txt,url:shareUrl}).catch(function(){})}else{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+shareUrl),'_blank')}})});
 
 var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
 var mp=pk.filter(function(x){return x.type==='member'&&x.price!=null&&!(x.promoEnd&&x.promoEnd<t)}).map(function(x){return x.price}),hasPt=pk.some(function(x){return x.type==='pt'}),tl=[[s.hours,'Jam operasional']];

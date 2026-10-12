@@ -13,3 +13,4 @@
 @media(max-width:500px){.prof .av.l{width:68px;height:68px;font-size:24px}.pr1{gap:12px}}
 @media(min-width:900px){.dgrid{grid-template-columns:380px 1fr;gap:20px;align-items:start}.dl{position:sticky;top:16px}.dh h1{order:0;flex:1;font-size:26px;margin:0}}
 .dl,.dr{min-width:0}.dgrid>*{min-width:0}
+.row2{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row2 select{flex:1;min-width:200px}

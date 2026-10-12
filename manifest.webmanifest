@@ -1,1 +1,72 @@
-{"id":"./","name":"FUN FITNESS","short_name":"FUN FITNESS","description":"FUN FITNESS — Build your stronger self. Kalisuren, Tajur Halang, Bogor.","lang":"id","start_url":"./index.html","scope":"./","display":"standalone","orientation":"any","background_color":"#090B0E","theme_color":"#090B0E","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icon-512-maskable.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"shortcuts":[{"name":"Login","url":"login.html"},{"name":"Daftar Member","url":"register.html"}]}
+{
+ "id": "./",
+ "name": "FUN FITNESS",
+ "short_name": "FUN FITNESS",
+ "description": "FUN FITNESS — gym dan personal training di Kalisuren, Tajur Halang, Bogor. Cek harga, daftar member, dan pantau membership.",
+ "lang": "id",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "any",
+ "background_color": "#090B0E",
+ "theme_color": "#090B0E",
+ "icons": [
+  {
+   "src": "icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icon-512-maskable.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ],
+ "shortcuts": [
+  {
+   "name": "Login",
+   "url": "login.html"
+  },
+  {
+   "name": "Daftar Member",
+   "url": "register.html"
+  }
+ ],
+ "categories": [
+  "fitness",
+  "health",
+  "sports"
+ ],
+ "prefer_related_applications": false,
+ "screenshots": [
+  {
+   "src": "shot-narrow-1.jpg",
+   "sizes": "540x960",
+   "type": "image/jpeg",
+   "form_factor": "narrow",
+   "label": "Beranda FUN FITNESS"
+  },
+  {
+   "src": "shot-narrow-2.jpg",
+   "sizes": "540x960",
+   "type": "image/jpeg",
+   "form_factor": "narrow",
+   "label": "Daftar harga membership"
+  },
+  {
+   "src": "shot-wide.jpg",
+   "sizes": "1280x720",
+   "type": "image/jpeg",
+   "form_factor": "wide",
+   "label": "Beranda FUN FITNESS di komputer"
+  }
+ ]
+}

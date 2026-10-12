@@ -25,3 +25,5 @@ td input{min-width:90px}
 .mainc .tw td:before{content:attr(data-label);font-weight:700;color:var(--tx2);text-align:left;font-size:12px}
 .mainc .tw td[data-label=Aksi]{flex-wrap:wrap;justify-content:flex-start;gap:6px;padding-top:10px}.mainc .tw td[data-label=Aksi]:before{display:none}.mainc .tw td[data-label=Aksi] .btn{flex:1 1 40%;white-space:nowrap}
 .mainc .tw td input{width:60%;min-width:0}}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin:8px 0}.chk input{width:auto;margin-top:4px}
+.wpv{display:flex;gap:0;border:1px solid var(--bd);border-radius:10px;overflow:hidden;margin:12px 0;max-width:460px;flex-direction:column;background:var(--bg)}.wpv img{width:100%;display:block}.wpv div{padding:10px 12px;display:flex;flex-direction:column;gap:2px}.wpv span{font-size:13px;color:var(--tx2)}.wpv small{color:var(--tx2)}

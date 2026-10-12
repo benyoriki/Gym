@@ -23,6 +23,7 @@ session:function(){return rd('session',null)},
 setSession:function(s){return s?wr('session',s):(ok?localStorage.removeItem(NS+'session'):delete mem.session,true)},
 log:function(type,detail){var s=db.session();var l=db.list('logs');l.push({id:uid('l'),at:new Date().toISOString(),type:type,detail:detail||'',user:s?s.id:'-'});wr('logs',l.slice(-300))},
 nextMemberId:function(){var n=db.list('members').length+1,id;do{id='FF-'+('0000'+n).slice(-4);n++}while(db.get('members',id));return id},
+catOf:function(p,t){if(t&&t.packageId==='visit')return'Visit Harian';if(t&&t.packageId==='reg')return'Registrasi';if(!p)return'Lainnya';if(p.type==='reguler')return'Reguler '+(p.group==='pelajar'?'Pelajar':'Dewasa');if(p.type==='pt')return'Personal Training';return'Promo Membership'},
 level:function(n){var L=[[0,'Pemula'],[5,'Rutin'],[15,'Konsisten'],[30,'Atlet'],[60,'Elite']],i=0;while(i<L.length-1&&n>=L[i+1][0])i++;return{lv:i+1,name:L[i][1],from:L[i][0],next:L[i+1]?L[i+1][0]:null}},
 counts:function(){var c={};db.list('visits').forEach(function(v){c[v.memberId]=(c[v.memberId]||0)+1});return c},
 rank:function(id){var c=db.counts(),me=c[id]||0,r=1,k;for(k in c)if(c[k]>me)r++;return r},
@@ -30,12 +31,15 @@ onsite:function(h){var t=Date.now()-(h||3)*36e5,seen={},out=[];db.list('visits')
 status:function(m){if(m.status==='nonaktif')return'nonaktif';if(!m.end)return'menunggu';var t=today();if(m.end<t)return'kedaluwarsa';if(m.end<=addDays(t,7))return'akan berakhir';return'aktif'},
 setTx:function(id,st,note){var t=db.get('transactions',id);if(!t||t.status!=='menunggu')return false; /* cegah proses ganda */
  if(st==='disetujui'){var m=db.get('members',t.memberId),pk=db.get('packages',t.packageId);if(!m||!pk)return false;
-  var base=(m.end&&m.end>today())?m.end:today();db.upd('members',m.id,{start:m.start&&m.end>today()?m.start:today(),end:addMonths(base,(+pk.months||0)+(+pk.bonus||0)),packageId:pk.id});}
+  var base=(m.end&&m.end>today())?m.end:today();db.upd('members',m.id,{start:m.start&&m.end>today()?m.start:today(),end:(function(){var e=addMonths(base,(+pk.months||0)+(+pk.bonus||0));return pk.days?addDays(e,+pk.days):e})(),packageId:pk.id});}
  db.upd('transactions',id,{status:st,note:note||t.note||''});db.log('Pembayaran '+st,t.no);return true},
 reset:function(){if(ok){Object.keys(localStorage).forEach(function(k){if(k.indexOf(NS)===0)localStorage.removeItem(k)})}else mem={};seed()}};
-var DS={name:'FUN FITNESS',address:'Jl. Raya Kalisuren, Kalisuren, RT 02/RW 03, Tajur Halang, Kabupaten Bogor, Jawa Barat 16320',hours:'Setiap hari, 06.00–23.00',phone1:'08831-963-981',phone2:'0881-2254-258',ig:'https://www.instagram.com/funfitness_centre/',maps:'https://maps.app.goo.gl/sA8oo7rcE4yC8PFUA?g_st=ac',mgm:'Ajak 3 orang, dapat bonus membership 1 bulan.',mgmStatus:'Perlu konfirmasi ketentuan'};
+var DS={waPrimary:'phone1',phone3:'0812-8390-2845',fbName:'FIT CENTER',feeVisit:30000,feeReg:25000,shareText:'Halo! Kenalan dengan FUN FITNESS, tempat fitness di Kalisuren, Tajur Halang, Bogor. Buka setiap hari 06.00-23.00, tersedia paket membership untuk dewasa dan pelajar, serta personal training. Lihat harga dan daftar di sini:',name:'FUN FITNESS',address:'Jl. Raya Kalisuren, Kalisuren, RT 02/RW 03, Tajur Halang, Kabupaten Bogor, Jawa Barat 16320',hours:'Setiap hari, 06.00–23.00',phone1:'08831-963-981',phone2:'0881-2254-258',ig:'https://www.instagram.com/funfitness_centre/',maps:'https://maps.app.goo.gl/sA8oo7rcE4yC8PFUA?g_st=ac',mgm:'Ajak 3 orang, dapat bonus membership 1 bulan.',mgmStatus:'Perlu konfirmasi ketentuan'};
+function regPk(){var o=[],g=[['dewasa','Dewasa',[100000,150000,400000,700000,1200000]],['pelajar','Pelajar',[75000,125000,350000,600000,1000000]]],L=[['2 Minggu',0,14],['1 Bulan',1,0],['3 Bulan',3,0],['6 Bulan',6,0],['12 Bulan',12,0]];
+g.forEach(function(x){L.forEach(function(l,i){o.push({id:'r'+x[0].charAt(0)+'-'+(i+1),name:x[1]+' - '+l[0],type:'reguler',group:x[0],price:x[2][i],months:l[1],days:l[2],bonus:0,active:true,popular:false,promoEnd:'',note:'Harga reguler sesuai poster harga member; perlu dikonfirmasi.'})})});return o}
+function mig2(){var l=db.list('packages'),have={},n=new Date().toISOString();l.forEach(function(p){have[p.id]=1});regPk().forEach(function(p){if(!have[p.id]){p.createdAt=p.updatedAt=n;l.push(p)}});wr('packages',l);wr('schema',2);db.log('Migrasi skema v2','Tambah harga reguler dewasa dan pelajar')}
 function seed(){
-if(rd('schema',0)>=1)return;var t=today();
+var sv=rd('schema',0);if(sv>=2)return;if(sv===1){mig2();return}var t=today();
 wr('packages',[
 {id:'p3',name:'Membership 3 Bulan',type:'member',price:450000,months:3,bonus:1,active:true,popular:true,promoEnd:'2026-10-31',note:'Promo Oktober: bonus 1 bulan. Ketentuan perlu dikonfirmasi.',demo:true},
 {id:'p6',name:'Membership 6 Bulan',type:'member',price:null,months:6,bonus:2,active:true,popular:false,promoEnd:'2026-10-31',note:'Bonus 2 bulan sesuai poster. Harga dan ketentuan perlu dikonfirmasi.',demo:true},
@@ -49,7 +53,7 @@ function T(n,m,nm,st,d,a){return{id:'t'+n,no:'TRX-DEMO-'+n,memberId:m,memberName
 wr('transactions',[T(1,'FF-0001','Budi Demo','disetujui',addDays(t,-30),450000),T(2,'FF-0003','Andi Demo','disetujui',addDays(t,-130),450000),T(3,'FF-0002','Sari Demo','menunggu',t,450000)]);
 wr('visits',[{id:'v1',memberId:'FF-0001',name:'Budi Demo',at:new Date().toISOString(),demo:true}]);
 wr('logs',[{id:'l0',at:new Date().toISOString(),type:'Seed data demo',detail:'DATA DEMO dibuat',user:'sistem'}]);
-wr('schema',1)}
+wr('schema',1);mig2()}
 seed();w.FF=w.FF||{};w.FF.db=db;
 w.addEventListener('storage',function(){if(w.FF&&FF.refresh)FF.refresh()});
 })(window);

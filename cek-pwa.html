@@ -1,0 +1,26 @@
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cek PWA — FUN FITNESS</title><meta name="robots" content="noindex,nofollow"><link rel="icon" href="favicon.png"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#090B0E"><link rel="stylesheet" href="style.css">
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('ff_theme')||'dark')}catch(e){}</script>
+<style>.ck{list-style:none;padding:0;margin:0}.ck li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--bd)}.ck b{flex:0 0 74px}.ok{color:#2ecc71}.no{color:#ff6b5e}.wa{color:#f0b429}</style></head><body>
+<div class="wrap" style="max-width:720px;padding-top:24px;padding-bottom:40px"><a class="back" href="index.html">&larr; Kembali ke beranda</a><h2>Cek PWA</h2><p class="mut">Pemeriksaan otomatis agar FUN FITNESS dapat dipasang di HP dan PC (Windows 7: Chrome 109).</p>
+<div class="card"><ul class="ck" id="ck"></ul><p><button class="btn p" id="ins" hidden>Pasang aplikasi sekarang</button></p></div></div>
+<script>
+(function(){var L=document.getElementById('ck'),ev=null;
+function row(s,t,m){var li=document.createElement('li');li.innerHTML='<b class="'+(s==='ok'?'ok':s==='no'?'no':'wa')+'">'+(s==='ok'?'LULUS':s==='no'?'GAGAL':'CEK')+'</b><span><b style="flex:none;display:inline">'+t+'</b><br><span class="mut">'+m+'</span></span>';L.appendChild(li)}
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();ev=e;var b=document.getElementById('ins');b.hidden=false;b.onclick=function(){ev.prompt()};row('ok','Browser siap memasang','Event instal diterima: tombol pasang tersedia.')});
+row(window.isSecureContext?'ok':'no','HTTPS / konteks aman',window.isSecureContext?'Situs dibuka lewat koneksi aman.':'Buka lewat https:// (GitHub Pages). File lokal (file://) tidak bisa PWA.');
+var st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;row('ok','Mode tampil',st?'Berjalan sebagai aplikasi terpasang.':'Berjalan di tab browser (normal sebelum dipasang).');
+var l=document.querySelector('link[rel=manifest]');
+if(!l){row('no','Manifest','Tautan manifest tidak ditemukan.')}else fetch(l.href).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(function(m){
+var ic=m.icons||[],has=function(s){return ic.some(function(i){return(i.sizes||'').indexOf(s)>-1})};
+row(m.name&&m.short_name?'ok':'no','Nama aplikasi',(m.name||'-')+' / '+(m.short_name||'-'));
+row(m.start_url&&/standalone|minimal-ui|fullscreen/.test(m.display||'')?'ok':'no','Start URL & display',(m.start_url||'-')+' • '+(m.display||'-'));
+row(has('192')&&has('512')?'ok':'no','Ikon 192 & 512','Ditemukan '+ic.length+' ikon.');
+row(ic.some(function(i){return i.purpose==='maskable'})?'ok':'wa','Ikon maskable',ic.some(function(i){return i.purpose==='maskable'})?'Tersedia (ikon pas di Android).':'Tidak ada.');
+Promise.all(ic.map(function(i){return fetch(new URL(i.src,l.href)).then(function(r){return r.ok}).catch(function(){return false})})).then(function(a){row(a.every(Boolean)?'ok':'no','File ikon dapat dimuat',a.filter(Boolean).length+' dari '+a.length+' ikon terbaca.')});
+row((m.screenshots||[]).length?'ok':'wa','Tangkapan layar',(m.screenshots||[]).length+' gambar untuk dialog instal yang lebih kaya.')}).catch(function(e){row('no','Manifest','Gagal dibaca: '+e.message)});
+if(!('serviceWorker' in navigator)){row('no','Service worker','Browser tidak mendukung.')}else navigator.serviceWorker.getRegistration().then(function(r){
+row(r?'ok':'no','Service worker terdaftar',r?'Scope: '+r.scope+(r.active?' • aktif':' • belum aktif'):'Belum terdaftar. Muat ulang halaman utama sekali, lalu buka lagi halaman ini.');
+row(navigator.serviceWorker.controller?'ok':'wa','Service worker mengendalikan halaman',navigator.serviceWorker.controller?'Ya (mode offline siap).':'Belum. Muat ulang halaman ini.')});
+if(window.caches)caches.keys().then(function(k){var f=k.filter(function(x){return x.indexOf('ff-')===0});if(!f.length){row('wa','Cache offline','Belum ada cache. Buka beranda lalu muat ulang.');return}caches.open(f[0]).then(function(c){return c.keys()}).then(function(q){row(q.length>5?'ok':'wa','Cache offline',f[0]+' • '+q.length+' berkas tersimpan.')})});
+setTimeout(function(){if(!ev&&!st)row('wa','Tombol instal otomatis','Belum ada event instal. Normal di Firefox/Safari, atau jika sudah terpasang. Pakai menu browser: ⋮ lalu Instal aplikasi (iPhone: Bagikan lalu Tambah ke Layar Utama).')},2500)})();
+</script></body></html>

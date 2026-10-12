@@ -29,7 +29,7 @@ var lf=d.getElementById('loginForm'),rf=d.getElementById('regForm');
 function errs(f,e){f.querySelectorAll('.err').forEach(function(x){x.textContent=''});for(var k in e){var x=f.querySelector('[data-e="'+k+'"]');if(x)x.textContent=e[k];else FF.toast(e[k],'err')}}
 if(lf)lf.addEventListener('submit',function(ev){ev.preventDefault();var b=lf.querySelector('button');if(b.disabled)return;b.disabled=true;b.textContent='Memproses…';
  var r=FF.auth.login(lf.id.value,lf.pw.value);if(r){errs(lf,{form:r});b.disabled=false;b.textContent='Masuk'}});
-if(rf){var sel=rf.pkg;db.list('packages').filter(function(p){return p.active&&p.type==='member'}).forEach(function(p){var o=d.createElement('option');o.value=p.id;o.textContent=p.name+(p.price==null?' (harga belum dikonfirmasi)':' — '+FF.rp(p.price));if(p.price==null)o.disabled=true;sel.appendChild(o)});
+if(rf){var sel=rf.pkg;db.list('packages').filter(function(p){return p.active&&p.type!=='pt'}).forEach(function(p){var o=d.createElement('option');o.value=p.id;o.textContent=p.name+(p.price==null?' (harga belum dikonfirmasi)':' — '+FF.rp(p.price));if(p.price==null)o.disabled=true;sel.appendChild(o)});
  var q=/pkg=(\w+)/.exec(location.search);if(q)sel.value=q[1];
  rf.addEventListener('submit',function(ev){ev.preventDefault();var b=rf.querySelector('button');if(b.disabled)return;
   var r=FF.auth.register({name:rf.name.value,username:rf.username.value,email:rf.email.value,phone:rf.phone.value,password:rf.password.value,password2:rf.password2.value,pkg:rf.pkg.value,agree:rf.agree.checked});

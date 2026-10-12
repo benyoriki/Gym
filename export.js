@@ -29,7 +29,7 @@ FF.exp=FF.exp||{};
 FF.exp.xlsx=function(D){
 var sum=[[{v:'FUN FITNESS - Laporan',s:2}],[{v:'Periode: '+D.per+' ('+D.range+')',s:8}],[{v:'Dibuat: '+D.now,s:8}],[],H(['Indikator','Nilai'])];
 D.kpi.forEach(function(k){sum.push([{v:k[0],s:7},{v:k[1],s:k[2]?6:9}])});sum.push([],H(['Paket','Jumlah','Total']));
-if(D.by.length)D.by.forEach(function(b){sum.push([{v:b[0],s:3},{v:b[1],s:9},{v:b[2],s:4}])});else sum.push([{v:'Belum ada penjualan terkonfirmasi',s:3}]);
+if(D.by.length)D.by.forEach(function(b){sum.push([{v:b[0],s:3},{v:b[1],s:9},{v:b[2],s:4}])});else sum.push([{v:'Belum ada penjualan terkonfirmasi',s:3}]);sum.push([],H(['Kategori','Jumlah','Total']));D.cat.forEach(function(b){sum.push([{v:b[0],s:3},{v:b[1],s:9},{v:b[2],s:4}])});
 var tx=[H(['No Transaksi','Tanggal','ID Member','Nama','Paket','Nominal','Status','Catatan'])];D.tx.forEach(function(r){tx.push([{v:r[0],s:3},{v:r[1],s:3},{v:r[2],s:3},{v:r[3],s:3},{v:r[4],s:3},{v:r[5],s:4},{v:r[6],s:3},{v:r[7]||'',s:3}])});
 var mb=[H(['ID','Nama','No HP','Email','Paket','Berakhir','Status'])];D.members.forEach(function(r){mb.push(r.map(function(v){return{v:v,s:3}}))});
 var vs=[H(['Waktu','ID Member','Nama'])];D.visits.forEach(function(r){vs.push(r.map(function(v){return{v:v,s:3}}))});
@@ -65,7 +65,7 @@ txt('FUN FITNESS',36,38,24,1,'#FFFFFF');txt('LAPORAN BISNIS',36,56,9,1,'#FFE3DF'
 txt('Periode: '+D.per,300,34,10,1,'#FFFFFF','r',259);txt(D.range,300,48,9,0,'#FFFFFF','r',259);txt('Dibuat: '+D.now,300,62,8,0,'#FFE3DF','r',259);y=94;
 var bw=(523-30)/4;D.kpi.forEach(function(k,i){var x=36+(i%4)*(bw+10),t=y+Math.floor(i/4)*64;rect(x,t,bw,54,'#F4F6F8');rect(x,t,3,54,'#E83B2E');txt(k[0],x+12,t+18,8,0,'#68717D');txt(k[2]?rp(k[1]):String(k[1]),x+12,t+41,k[2]?13:18,1,'#20242A')});y+=64*Math.ceil(D.kpi.length/4)+10;
 sec('Penjualan per paket (terkonfirmasi)');table([{h:'Paket',w:303},{h:'Jumlah',w:80,a:'r'},{h:'Total',w:140,a:'r'}],D.by.map(function(b){return[b[0],String(b[1]),rp(b[2])]}));
-sec('Daftar transaksi');var SC={disetujui:'#1f8f4e',ditolak:'#D92626',dibatalkan:'#D92626',menunggu:'#b7791f'};
+sec('Pendapatan per kategori');table([{h:'Kategori',w:303},{h:'Jumlah',w:80,a:'r'},{h:'Total',w:140,a:'r'}],D.cat.map(function(b){return[b[0],String(b[1]),rp(b[2])]}));sec('Daftar transaksi');var SC={disetujui:'#1f8f4e',ditolak:'#D92626',dibatalkan:'#D92626',menunggu:'#b7791f'};
 table([{h:'No Transaksi',w:100},{h:'Tanggal',w:62},{h:'Member',w:100},{h:'Paket',w:111},{h:'Nominal',w:80,a:'r'},{h:'Status',w:70}],D.tx.map(function(r){return[r[0],r[1],r[3],r[4],rp(r[5]),{t:r[6],c:SC[r[6]],b:1}]}));
 sec('Member yang perlu ditindaklanjuti');var ml=D.members.filter(function(m){return m[6]==='akan berakhir'||m[6]==='kedaluwarsa'});
 table([{h:'ID',w:60},{h:'Nama',w:150},{h:'No HP',w:100},{h:'Berakhir',w:90},{h:'Status',w:123}],ml.map(function(m){return[m[0],m[1],m[2],m[5],{t:m[6],c:m[6]==='kedaluwarsa'?'#D92626':'#b7791f',b:1}]}));

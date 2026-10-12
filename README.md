@@ -54,3 +54,9 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - Admin: kartu sapaan + aksi cepat, bar status membership berwarna dengan legenda, grafik berwarna per status, halaman Laporan berupa kartu KPI, tabel otomatis menjadi kartu hingga lebar 1100px.
 - Banner petunjuk muncul jika HP memakai "Situs desktop" (matikan agar tampilan pas di HP).
 - Naikkan versi cache PWA ke `ff-v7`.
+
+## v8
+- **Harga reguler dari poster "Harga Member"** (10 paket: Dewasa & Pelajar × 2 minggu, 1, 3, 6, 12 bulan), biaya **Visit Rp 30.000** dan **Registrasi Rp 25.000**, kontak WhatsApp **0812-8390-2845**, dan Facebook "FIT CENTER". Tampil di beranda (tab Dewasa/Pelajar) dan dikelola admin: Paket & Promo (kolom Hari untuk paket 2 minggu), Pengaturan (kontak, biaya, nomor tombol WhatsApp), Kunjungan (Catat visit harian), dan persetujuan pembayaran (centang biaya registrasi member baru). Laporan, PDF, dan Excel memuat "Pendapatan per kategori".
+- Data lama otomatis dimigrasi (skema v2) tanpa menimpa harga/ubahan admin. Poster berusia sekitar 2 tahun: **konfirmasi harga** lalu ubah di Admin → Paket & Promo bila perlu.
+- **Pratinjau WhatsApp**: `og.jpg` (1200×630, 212 KB) + judul/deskripsi Open Graph di `index.html`. WhatsApp menyimpan pratinjau lama; jika gambar tidak berubah, kirim ulang tautan dengan tambahan `?v=2` atau ganti nama file `og.jpg`. Tombol "Bagikan" memakai pesan di Admin → Pengaturan.
+- **PWA**: `cek-pwa.html` (diagnosis otomatis), tangkapan layar di manifest, strategi cache network-first (versi terbaru saat online, offline tetap jalan), panduan "Cara pasang aplikasi", info pembaruan.
