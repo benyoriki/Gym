@@ -11,3 +11,17 @@ td input{min-width:90px}
 .top{flex-wrap:wrap}@media(max-width:400px){.top .bd{display:none}}
 .stat{padding:14px 16px}.stat b{font-family:var(--hf);font-size:26px;line-height:1.25}@media(max-width:600px){.stat b{font-size:21px}.stat{font-size:13px}}
 .side button.on{box-shadow:inset 3px 0 0 #fff}
+/* v7 */
+.cb i{background:linear-gradient(180deg,var(--pri),var(--pri2));border-radius:6px 6px 0 0}
+.stk{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--bd);margin:10px 0 12px}.stk i{display:block;min-width:6px}.lg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px}.lg b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px}
+.gr{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:20px;border-radius:12px;margin-bottom:16px;color:#fff;background:linear-gradient(120deg,#0B0D10,#1b1f26 55%,#8f1d1d);border:1px solid var(--bd)}.gr h2{margin:0;font-size:24px}.gr p{margin:4px 0 0;color:#A6ADB7}.gq{display:flex;gap:8px;flex-wrap:wrap}.gq .btn:not(.p){color:#fff;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.25)}
+.top{background:var(--navbg)}
+@media(max-width:1100px){
+.mainc .tw table,.mainc .tw tbody,.mainc .tw tr,.mainc .tw td{display:block;width:100%}
+.mainc .tw tr:first-child{display:none}
+.mainc .tw tbody{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.mainc .tw tr{border:1px solid var(--bd);border-radius:10px;padding:8px 10px;background:var(--card)}
+.mainc .tw td{white-space:normal;border:0;display:flex;justify-content:space-between;align-items:center;gap:12px;text-align:right;padding:5px 0;overflow-wrap:anywhere}
+.mainc .tw td:before{content:attr(data-label);font-weight:700;color:var(--tx2);text-align:left;font-size:12px}
+.mainc .tw td[data-label=Aksi]{flex-wrap:wrap;justify-content:flex-start;gap:6px;padding-top:10px}.mainc .tw td[data-label=Aksi]:before{display:none}.mainc .tw td[data-label=Aksi] .btn{flex:1 1 40%;white-space:nowrap}
+.mainc .tw td input{width:60%;min-width:0}}

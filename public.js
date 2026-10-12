@@ -21,10 +21,21 @@ d.getElementById('contact').innerHTML=h;d.getElementById('fcontact').innerHTML=h
 d.getElementById('year').textContent=new Date().getFullYear();
 var G=[['gym-interior.jpg','Interior FUN FITNESS'],['hero-gym.jpg','Area latihan FUN FITNESS'],['gym-treadmill.jpg','Treadmill'],['gym-dumbbell.jpg','Dumbbell'],['gym-mesin.jpg','Mesin latihan']],gl=d.getElementById('gal'),lb=d.getElementById('lb');
 gl.innerHTML=G.map(function(x){return'<figure><img src="'+x[0]+'" alt="'+x[1]+'" loading="lazy"></figure>'}).join('');
-function bad(i){var f=i.parentNode;if(f.parentNode)f.parentNode.removeChild(f);if(!gl.querySelector('img'))gl.innerHTML='<div class="card" style="grid-column:1/-1"><p class="mut" style="margin:0">Foto galeri akan segera hadir. Lihat Instagram kami untuk foto terbaru.</p></div>'}
+function bad(i){var f=i.parentNode;if(f.parentNode)f.parentNode.removeChild(f);if(!gl.querySelector('img'))gl.innerHTML='<div class="card" style="grid-column:1/-1"><p class="mut" style="margin:0">Foto galeri akan segera hadir. Lihat Instagram kami untuk foto terbaru.</p><p style="margin:12px 0 0"><a class="btn p" href="'+s.ig+'" target="_blank" rel="noopener">Lihat Instagram</a></p></div>'}
 gl.querySelectorAll('img').forEach(function(i){i.addEventListener('error',function(){bad(i)});if(i.complete&&!i.naturalWidth)bad(i)});
 gl.addEventListener('click',function(e){var i=e.target.tagName==='IMG'?e.target:null;if(i){lb.querySelector('img').src=i.src;lb.querySelector('img').alt=i.alt;lb.className='on'}});
 lb.addEventListener('click',function(){lb.className=''});d.addEventListener('keydown',function(e){if(e.key==='Escape')lb.className=''});
 d.querySelectorAll('.nav nav a').forEach(function(a){a.addEventListener('click',function(){d.body.classList.remove('menu')})});
+
+var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+var mp=pk.filter(function(x){return x.type==='member'&&x.price!=null&&!(x.promoEnd&&x.promoEnd<t)}).map(function(x){return x.price}),hasPt=pk.some(function(x){return x.type==='pt'}),tl=[[s.hours,'Jam operasional']];
+if(mp.length)tl.push([FF.rp(Math.min.apply(null,mp)),'Membership mulai dari']);if(hasPt)tl.push(['Personal Training','Paket 2 dan 5 sesi tersedia']);
+d.getElementById('tiles').innerHTML=tl.map(function(x){return'<div class="tile"><b>'+E(x[0])+'</b><span>'+E(x[1])+'</span></div>'}).join('');
+if('IntersectionObserver' in window&&!rm){var rv=d.querySelectorAll('.sh,.ab>div,.card,.poster,.tile');[].forEach.call(rv,function(e){e.className+=' rv'});
+var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.className+=' in';io.unobserve(x.target)}})},{threshold:.06});[].forEach.call(rv,function(e){io.observe(e)})}
+if('IntersectionObserver' in window){var lk={};[].forEach.call(d.querySelectorAll('.nav nav a[href^="#"]'),function(a){lk[a.getAttribute('href').slice(1)]=a});
+var so=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){for(var k in lk)lk[k].className=lk[k].className.replace(' on','');if(lk[x.target.id])lk[x.target.id].className+=' on'}})},{rootMargin:'-45% 0px -50% 0px'});Object.keys(lk).forEach(function(k){var e=d.getElementById(k);if(e)so.observe(e)})}
+var sp=d.createElement('div'),tk=0;sp.id='sp';d.body.appendChild(sp);
+window.addEventListener('scroll',function(){if(tk)return;tk=1;requestAnimationFrame(function(){var h=d.documentElement.scrollHeight-window.innerHeight;sp.style.width=(h>0?window.pageYOffset/h*100:0)+'%';tk=0})},{passive:true});
 });
 })(document);

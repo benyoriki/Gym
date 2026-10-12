@@ -24,3 +24,6 @@ d.querySelectorAll('[data-s]').forEach(function(e){var v=FF.db.settings()[e.getA
 d.querySelectorAll('[data-link]').forEach(function(e){var k=e.getAttribute('data-link'),s=FF.db.settings(),u=k==='wa'?FF.wa(s.phone1):s[k];if(u)e.href=u;else e.style.display='none'});
 });
 })(window,document);
+
+(function(w,d){d.addEventListener('DOMContentLoaded',function(){try{if(!('ontouchstart' in w)&&!navigator.maxTouchPoints)return;if(w.innerWidth<screen.width*1.5||sessionStorage.getItem('ff_tip'))return;sessionStorage.setItem('ff_tip','1')}catch(e){return}
+var b=d.createElement('div');b.className='tip';b.innerHTML='<span>Anda memakai <b>Situs desktop</b>. Matikan di menu browser agar tampilan pas di HP.</span><button class="btn s">Tutup</button>';b.querySelector('button').onclick=function(){if(b.parentNode)b.parentNode.removeChild(b)};d.body.appendChild(b)})})(window,document);

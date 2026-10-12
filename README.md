@@ -48,3 +48,9 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
   - iPhone: Safari → Bagikan → Tambah ke Layar Utama.
   - Setelah mengubah file, naikkan `V` di `sw.js` (mis. `ff-v7`) agar pengguna mendapat versi terbaru.
 - Dashboard member: dua kolom di PC; avatar daftar Top 5 tidak lagi lonjong.
+
+## v7 — Tampilan modern
+- Beranda: navbar kaca (blur) dengan penanda bagian aktif, bar progres scroll, animasi muncul halus (nonaktif jika "kurangi gerakan"), label bagian bernomor, bagian Tentang dengan kartu info dari data (jam buka, harga mulai dari, PT), kartu lokasi bergaya peta dengan tombol Petunjuk Arah, galeri kosong kini menampilkan tombol Instagram.
+- Admin: kartu sapaan + aksi cepat, bar status membership berwarna dengan legenda, grafik berwarna per status, halaman Laporan berupa kartu KPI, tabel otomatis menjadi kartu hingga lebar 1100px.
+- Banner petunjuk muncul jika HP memakai "Situs desktop" (matikan agar tampilan pas di HP).
+- Naikkan versi cache PWA ke `ff-v7`.

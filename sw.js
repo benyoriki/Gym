@@ -1,5 +1,5 @@
 /* Service worker FUN FITNESS: cache aset statis, stale-while-revalidate, fallback offline. Naikkan V saat rilis. */
-var V='ff-v6',A=['./','index.html','login.html','register.html','member.html','admin.html','style.css','auth.css','member.css','admin.css','storage.js','app.js','pwa.js','auth.js','public.js','member.js','admin.js','avatar.js','export.js','loader.js','logo.png','favicon.png','icon-192.png','icon-512.png','manifest.webmanifest'];
+var V='ff-v7',A=['./','index.html','login.html','register.html','member.html','admin.html','style.css','auth.css','member.css','admin.css','storage.js','app.js','pwa.js','auth.js','public.js','member.js','admin.js','avatar.js','export.js','loader.js','logo.png','favicon.png','icon-192.png','icon-512.png','manifest.webmanifest'];
 self.addEventListener('install',function(e){e.waitUntil(caches.open(V).then(function(c){return Promise.all(A.map(function(u){return c.add(u).catch(function(){})}))}).then(function(){return self.skipWaiting()}))});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(k){return Promise.all(k.filter(function(x){return x!==V}).map(function(x){return caches.delete(x)}))}).then(function(){return self.clients.claim()}))});
 self.addEventListener('fetch',function(e){var r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==location.origin)return;
