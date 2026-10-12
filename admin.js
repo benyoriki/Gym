@@ -45,7 +45,7 @@ function remind(){var l=mem().filter(function(m){return db.status(m)==='akan ber
 var V={overview:overview,members:members,payments:payments,packages:packages,visits:visits,reports:reports,settings:settings,sim:function(){return FF.simUI.html()},logs:logs};FF.adminView=function(){return view};
 function go(v){view=v;q='';cq='';draw()}
 function cu(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;[].forEach.call(main.querySelectorAll('.stat b'),function(e){var n=+e.textContent;if(!(n>0)||e.textContent!==String(n))return;var t0=Date.now();(function f(){var p=Math.min(1,(Date.now()-t0)/700);e.textContent=Math.round(n*p);if(p<1)setTimeout(f,30)})()})}
-function draw(){d.getElementById('crumb').textContent='Admin / '+T[view];d.querySelectorAll('[data-v]').forEach(function(b){b.className=b.getAttribute('data-v')===view?'on':''});main.innerHTML=V[view]();FF.labelTables(main);if(view==='overview')cu();d.body.classList.remove('side-open')}
+function draw(){d.getElementById('crumb').innerHTML='<span class="cr">Admin / </span>'+T[view];d.querySelectorAll('[data-v]').forEach(function(b){b.className=b.getAttribute('data-v')===view?'on':''});main.innerHTML=V[view]();FF.labelTables(main);if(view==='overview')cu();d.body.classList.remove('side-open')}
 V.overview=function(){return greet()+overview()+remind()+charts()};FF.refresh=draw;draw();
 d.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){go(b.getAttribute('data-v'))})});
 d.getElementById('out').onclick=FF.auth.logout;d.getElementById('sb').onclick=function(){d.body.classList.toggle('side-open')};

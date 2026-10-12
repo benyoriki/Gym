@@ -69,3 +69,11 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - **Admin → Uji Coba & Demo** (`sim.js`): simulasi real-time, picu kejadian manual, skenario uji, dan tombol **Hapus data demo, mulai data asli** (data asli & akun admin tidak terhapus).
 - Loading screen memuat "sistem & website benyoriki.com" (tautan tab baru). Teks "Prototipe sistem & website gym, testing benyoriki.com ↗" di footer, login, register, admin, dashboard member.
 - Setelah deploy: Chrome/Android yang sudah pernah membuka situs perlu membuka ulang sekali agar service worker v9 aktif. Jika dulu sudah pernah memasang versi lama, hapus aplikasi lama lalu pasang lagi (ID aplikasi berubah).
+
+## v10 — Tampilan baru "panel telemetri latihan"
+- `ui.css` (dimuat paling akhir di semua halaman) menggantikan tampilan: grid + glow murni CSS (tanpa foto berat), sudut miring khas logo, tombol gradien, kartu dengan sorotan kursor di PC, tema terang tetap berfungsi.
+- Font **Chakra Petch** di-host sendiri (`cp-700.woff2`, `cp-700i.woff2`, `cp-500.woff2`, ±30 KB total) agar judul sama di Android, iPhone, dan PC. Sebelumnya memakai Bahnschrift/Oswald yang tidak ada di HP.
+- Hero: kartu **Gym Live** (`fx.js`) berisi jam, jumlah sedang di gym, check-in hari ini, member aktif, dan grafik **jam ramai** (rata-rata 14 hari terakhir) dari data nyata; tombolnya membuka panel Live.
+- Navbar HP menjadi menu layar penuh; tombol Live mengecil jadi ikon saat scroll agar tidak menutupi harga; bar bawah mengikuti safe-area HP.
+- Loading screen: cincin progres + tautan benyoriki.com. Admin dan dashboard member: header satu baris di HP, kartu member baru, panel samping admin baru.
+- Foto `hero-gym.jpg` tidak lagi diminta oleh CSS (sebelumnya 404). Service worker `ff-v10`.

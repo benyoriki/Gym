@@ -63,3 +63,8 @@ Diuji di Chromium (Playwright), tampilan HP 390×844 dan desktop 1280×800, jam 
 - Klik benyoriki.com di loading screen membuka tab baru ke https://benyoriki.com (sandbox tes tanpa internet, jadi halaman tujuan tidak termuat).
 - Data & notifikasi tersimpan di localStorage browser yang sama; lintas perangkat butuh Firebase (lihat FIREBASE-MIGRATION.md).
 - Belum diuji di HP fisik / Android sungguhan; pemasangan WebAPK bergantung Google Play Services.
+
+## Regresi v10 (tampilan baru)
+- Seluruh 42 skenario alur lengkap (beranda, Live, data demo, daftar, notifikasi, persetujuan, check-in, simulasi, laporan, hapus demo, teks prototipe) lulus ulang setelah redesign.
+- Uji PWA (instalasi, offline, SW) lulus ulang dengan `ff-v10`.
+- Tangkapan layar diperiksa di HP 390 px dan PC 1366 px, tema gelap dan terang.
