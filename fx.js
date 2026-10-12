@@ -15,9 +15,10 @@ function tele(){var el=d.getElementById('tele'),db=w.FF&&FF.db;if(!el||!db)retur
  bars=prof.map(function(x,k){return'<i class="'+(open&&k===H-6?'now':'')+'" style="--i:'+k+';--h:'+(mx?Math.max(8,Math.round(x/mx*100)):8)+'"></i>'}).join('');
  el.innerHTML='<div class="th"><span class="ts'+(open?'':' off')+'"><i></i>Gym live</span><span class="tc" id="teleClock">'+p2(H)+'.'+p2(now.getMinutes())+'</span></div>'+
  '<p class="tsub">'+(open?'Buka sekarang · tutup 23.00':'Tutup · buka lagi 06.00')+'</p>'+
+ '<svg class="ecg'+(open?'':' off')+'" viewBox="0 0 300 28" aria-hidden="true"><path class="e0" d="M0 14H70L78 14L84 3L92 25L98 14H150L158 14L164 6L170 22L176 14H300"/><path class="e1" pathLength="100" d="M0 14H70L78 14L84 3L92 25L98 14H150L158 14L164 6L170 22L176 14H300"/></svg>'+
  '<div class="tk"><div><b data-n="'+ons+'">0</b><span>Sedang di gym</span></div><div><b data-n="'+ci+'">0</b><span>Check-in hari ini</span></div><div><b data-n="'+act+'">0</b><span>Member aktif</span></div></div>'+
  '<div class="tl"><b>Jam ramai</b><span>Sekarang: '+lbl+'</span></div><div class="tb" aria-hidden="true">'+bars+'</div><div class="tx2" aria-hidden="true"><span>06</span><span>10</span><span>14</span><span>18</span><span>22</span></div>'+
- '<button type="button" class="btn p" id="teleGo">Lihat siapa yang latihan</button>';
+ '<button type="button" class="btn p" id="teleGo">Lihat siapa yang latihan</button><u class="scan"></u>';
  [].forEach.call(el.querySelectorAll('[data-n]'),function(b){var n=+b.getAttribute('data-n');if(first)cu(b,n);else b.textContent=n});first=false}
 d.addEventListener('DOMContentLoaded',function(){
  tele();setInterval(function(){if(!d.hidden)tele()},30000);
@@ -28,6 +29,9 @@ d.addEventListener('DOMContentLoaded',function(){
  w.addEventListener('scroll',function(){if(tk)return;tk=1;requestAnimationFrame(function(){tk=0;var y=w.pageYOffset,f=d.getElementById('fab');if(nav)nav.className=nav.className.replace(' sc','')+(y>8?' sc':'');
   if(f){f.classList.toggle('min',y>160);clearTimeout(idle);if(y>160)idle=setTimeout(function(){f.classList.remove('min')},900)}})},{passive:true});
 });
+d.addEventListener('DOMContentLoaded',function(){var hero=d.querySelector('.hero');if(!hero||!hov||rm)return;var g=d.createElement('i'),hr=0,hx=0,hy=0;g.className='hglow';hero.appendChild(g);
+ hero.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;var r=hero.getBoundingClientRect();hx=e.clientX-r.left;hy=e.clientY-r.top;if(hr)return;hr=requestAnimationFrame(function(){hr=0;g.style.transform='translate3d('+hx+'px,'+hy+'px,0)';g.style.opacity=1})},{passive:true});
+ hero.addEventListener('pointerleave',function(){g.style.opacity=0})});
 if(hov&&!rm){var raf=0,lx,ly,lt;d.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;var el=e.target.closest&&e.target.closest('.card,.tile');if(!el||el.classList.contains('mapc'))return;lx=e.clientX;ly=e.clientY;lt=el;if(raf)return;
  raf=requestAnimationFrame(function(){raf=0;var r=lt.getBoundingClientRect();lt.style.setProperty('--mx',(lx-r.left)+'px');lt.style.setProperty('--my',(ly-r.top)+'px');if(!lt.classList.contains('fx'))lt.classList.add('fx')})},{passive:true})}
 })(window,document);

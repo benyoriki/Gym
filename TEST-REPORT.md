@@ -68,3 +68,7 @@ Diuji di Chromium (Playwright), tampilan HP 390×844 dan desktop 1280×800, jam 
 - Seluruh 42 skenario alur lengkap (beranda, Live, data demo, daftar, notifikasi, persetujuan, check-in, simulasi, laporan, hapus demo, teks prototipe) lulus ulang setelah redesign.
 - Uji PWA (instalasi, offline, SW) lulus ulang dengan `ff-v10`.
 - Tangkapan layar diperiksa di HP 390 px dan PC 1366 px, tema gelap dan terang.
+
+## Regresi v11
+- 42 skenario alur lengkap + uji PWA lulus ulang (55 lulus; 1 "gagal" hanyalah pembandingan huruf kapital di skrip tes untuk judul panduan pasang, yang tampil benar).
+- Dicek ulang di HP 390 px: menu, footer, form daftar, kartu Gym Live (jam buka & tutup).

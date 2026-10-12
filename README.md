@@ -77,3 +77,8 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - Navbar HP menjadi menu layar penuh; tombol Live mengecil jadi ikon saat scroll agar tidak menutupi harga; bar bawah mengikuti safe-area HP.
 - Loading screen: cincin progres + tautan benyoriki.com. Admin dan dashboard member: header satu baris di HP, kartu member baru, panel samping admin baru.
 - Foto `hero-gym.jpg` tidak lagi diminta oleh CSS (sebelumnya 404). Service worker `ff-v10`.
+
+## v11 — Perbaikan dari screenshot HP + sentuhan "canggih"
+- Menu HP muat satu layar (tombol Live & bar bawah disembunyikan saat menu terbuka); footer tidak lagi tertutup tombol Live dan tersusun rapi; form daftar/login lebih ringkas dengan kotak centang bertema.
+- Panel Live menampilkan "Gym sedang tutup" di luar jam buka.
+- Kartu Gym Live: garis detak animasi, efek scan, dan cahaya hero yang mengikuti kursor di PC (hanya transform/opacity, ringan). Transisi halus antarhalaman (View Transitions). Service worker `ff-v11`.

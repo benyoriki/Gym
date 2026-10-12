@@ -20,7 +20,7 @@ function build(){
  d.body.appendChild(box);d.body.appendChild(fab)}
 function viewOn(){var l=onsite(),c=db.counts(),e=d.getElementById('pOn');
  e.innerHTML=l.length?l.map(function(x){var L=db.level(c[x.m.id]||0);return'<div class="lr">'+FF.av(x.m)+'<div class="lm"><b>'+E(FF.first(x.m.name))+'</b><span>'+ago(x.at)+'</span></div><span class="bd g">Lv '+L.lv+' · '+L.name+'</span></div>'}).join(''):
- '<div class="lempty"><b>Belum ada check-in dalam 3 jam terakhir.</b><span>Jadilah yang pertama latihan hari ini.</span><a class="btn p s" href="register.html">Daftar member</a></div>';
+ (function(){var H=new Date().getHours();return H>=6&&H<23?'<div class="lempty"><b>Belum ada check-in dalam 3 jam terakhir.</b><span>Jadilah yang pertama latihan hari ini.</span><a class="btn p s" href="register.html">Daftar member</a></div>':'<div class="lempty"><b>Gym sedang tutup.</b><span>Buka lagi pukul 06.00. Sampai jumpa besok pagi!</span><a class="btn p s" href="register.html">Daftar member</a></div>'})();
  return l.length}
 function medal(i){return i===0?'m1':i===1?'m2':i===2?'m3':''}
 function viewRk(){var since=per==='month'?monthStart():null,all=db.ranking(since,false),pub=all.filter(function(x){return x.m.showPublic!==false}),top=pub.slice(0,10),mx=top.length?top[0].n:1,c=db.counts(),e=d.getElementById('rk'),s=db.session(),mine='';
@@ -29,7 +29,7 @@ function viewRk(){var since=per==='month'?monthStart():null,all=db.ranking(since
 function refresh(){if(!fab)return;var n=0;try{n=viewOn();viewRk()}catch(x){}
  d.getElementById('fc').textContent=n;d.getElementById('fc').className='fc'+(n?'':' z');d.getElementById('tOnN').textContent=n;
  var demo=db.list('members').some(function(m){return m.demo&&m.role==='member'});
- d.getElementById('lvs').innerHTML=(n?n+' member sedang latihan':'Belum ada yang check-in')+(demo?' <span class="bd y">DEMO</span>':'');
+ d.getElementById('lvs').innerHTML=(n?n+' member sedang latihan':(new Date().getHours()>=6&&new Date().getHours()<23?'Belum ada yang check-in':'Gym sedang tutup'))+(demo?' <span class="bd y">DEMO</span>':'');
  fab.setAttribute('aria-label','Live: '+n+' member sedang di gym. Buka daftar dan peringkat.')}
 function setTab(t){tab=t;var on=t==='on';d.getElementById('tOn').setAttribute('aria-selected',on);d.getElementById('tRk').setAttribute('aria-selected',!on);d.getElementById('pOn').hidden=!on;d.getElementById('pRk').hidden=on;
  d.getElementById('lvn').textContent=on?'Berdasarkan check-in 3 jam terakhir. Hanya nama depan dan foto member yang mengizinkan.':'Peringkat berdasarkan jumlah kunjungan. Hanya member yang mengizinkan tampil.'}

@@ -124,3 +124,33 @@ footer{position:relative;background:#05070A;border:0;padding:48px 0 30px}footer:
 #galeri,#lokasi{content-visibility:auto;contain-intrinsic-size:auto 560px}
 @media(min-width:901px){.hero h1{font-size:clamp(60px,6.2vw,92px)}}
 @media(max-width:600px){.dh .pwa,.top .pwa{display:none}}
+/* ===== v11 ===== */
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}
+@media(prefers-reduced-motion:reduce){@view-transition{navigation:none}}
+/* kartu Gym Live: garis detak + scan + cahaya kursor */
+.ecg{display:block;width:100%;height:auto;margin:10px 0 0}.ecg path{fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ecg .e0{stroke:rgba(255,255,255,.12)}.ecg .e1{stroke:var(--pri);stroke-dasharray:24 76;stroke-dashoffset:24;animation:ecg 2.4s linear infinite;filter:drop-shadow(0 0 4px var(--pri))}.ecg.off .e1{display:none}
+@keyframes ecg{to{stroke-dashoffset:-76}}
+.scan{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:16px;overflow:hidden;pointer-events:none}.scan:before{content:"";position:absolute;left:0;right:0;top:0;height:45%;background:linear-gradient(transparent,rgba(255,74,54,.1),transparent);transform:translateY(-110%);animation:scn 5.5s linear infinite}
+@keyframes scn{to{transform:translateY(260%)}}
+.hglow{position:absolute;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,rgba(255,74,54,.2),transparent 65%);opacity:0;transition:opacity .4s;pointer-events:none;z-index:-1;will-change:transform}
+@media(prefers-reduced-motion:reduce){.ecg .e1,.scan:before{animation:none}}
+/* menu HP: ringkas, tanpa tertutup FAB / bar bawah */
+@media(max-width:1099px){body.menu .fab,body.menu .mbar,body.menu #lv{display:none}
+.nav nav{flex-direction:row;flex-wrap:wrap;gap:0 10px;align-content:flex-start}
+.nav nav a:not(.btn){flex:0 0 100%;font-size:20px;padding:13px 2px}
+.nav nav .btn{flex:1 1 calc(50% - 5px);min-height:48px;margin-top:10px}.nav nav .pwa,.nav nav #theme{flex-basis:100%}}
+/* footer */
+footer .wrap>div:last-child>br{display:none}
+footer .wrap>div:last-child a:not([href^="https://benyoriki"]){display:inline-block;border:1px solid #2a3340;border-radius:99px;padding:8px 14px;margin:0 8px 10px 0;text-decoration:none;font-size:14px;color:#E6EAF0}
+footer .wrap>div:last-child a:not([href^="https://benyoriki"]):hover{border-color:var(--pri)}
+@media(max-width:700px){footer{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}footer .wrap{grid-template-columns:1fr;gap:20px}footer .proto{padding-right:84px}}
+/* form login / daftar */
+.auth .field{margin:0 0 12px}.auth .field label{display:block;margin:0 0 6px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--tx2)}.auth .field input:not([type=checkbox]),.auth .field select{min-height:46px}
+input[type=checkbox]{accent-color:var(--pri)}#agree{width:20px!important;height:20px;margin:0 8px 0 0;vertical-align:-5px}.auth .field label:has(#agree){font-size:14px;color:var(--tx);font-weight:500}
+.auth h2{font-style:italic}
+@media(max-width:600px){.auth{padding:12px;align-items:flex-start}.auth .card{padding:20px 18px}.auth .field{margin-bottom:10px}}
+/* admin HP: kartu statistik lebih ringkas */
+@media(max-width:767px){.stat{padding:12px 14px;min-height:0}.stat b{font-size:24px}}
+.nav nav #theme:after{content:"Ganti tema";margin-left:8px;font-size:14px}
