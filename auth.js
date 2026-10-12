@@ -19,9 +19,11 @@ register:function(f){var e={},ms=db.list('members');
  if(Object.keys(e).length)return e;
  var m=db.add('members',{id:db.nextMemberId(),name:f.name.trim(),username:f.username,email:f.email,phone:f.phone,passHash:db.hash(f.password),role:'member',packageId:null,start:'',end:'',status:'ok'});
  if(!m)return{form:'Gagal menyimpan.'};db.log('Pendaftaran member',m.id);
+ db.notify({to:'admin',type:'member',title:'Member baru mendaftar',text:m.name+' ('+m.id+') baru saja mendaftar'+(f.pkg&&db.get('packages',f.pkg)?' dan memilih '+db.get('packages',f.pkg).name:'')+'.'});
  if(f.pkg){FF.auth.request(m,f.pkg)}return{ok:m}},
 request:function(m,pkId){var p=db.get('packages',pkId);if(!p||p.price==null||!p.active)return null;
- var t=db.add('transactions',{no:'TRX-'+Date.now().toString(36).toUpperCase(),memberId:m.id,memberName:m.name,packageId:p.id,packageName:p.name,amount:p.price,date:db.today(),method:'Transfer (simulasi)',status:'menunggu',note:''});db.log('Pengajuan paket',p.name);return t}
+ var t=db.add('transactions',{no:'TRX-'+Date.now().toString(36).toUpperCase(),memberId:m.id,memberName:m.name,packageId:p.id,packageName:p.name,amount:p.price,date:db.today(),method:'Transfer (simulasi)',status:'menunggu',note:''});db.log('Pengajuan paket',p.name);
+ if(t){db.notify({to:'admin',type:'tx',title:'Pengajuan pembayaran baru',text:m.name+' mengajukan '+p.name+' ('+FF.rp(p.price)+'). Menunggu persetujuan.'});db.notify({to:m.id,type:'tx',title:'Pengajuan diterima',text:'Pengajuan '+p.name+' sedang menunggu konfirmasi admin.'})}return t}
 };
 d.addEventListener('DOMContentLoaded',function(){
 d.querySelectorAll('input[type=password]').forEach(function(i){var b=d.createElement('button');b.type='button';b.className='pwt';b.textContent='Lihat';b.onclick=function(){var h=i.type==='password';i.type=h?'text':'password';b.textContent=h?'Sembunyi':'Lihat'};var w=d.createElement('div');w.className='pwb';i.parentNode.insertBefore(w,i);w.appendChild(i);w.appendChild(b)});

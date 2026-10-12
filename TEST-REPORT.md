@@ -1,0 +1,65 @@
+# Laporan tes — FUN FITNESS v9
+Diuji di Chromium (Playwright), tampilan HP 390×844 dan desktop 1280×800, jam dibekukan 12.50 WIB.
+
+- [x] loader: teks "sistem & website benyoriki.com"
+- [x] loader: link href benyoriki.com, target _blank
+- [x] loader: klik membuka TAB BARU yang meminta https://benyoriki.com (sandbox tanpa internet, jadi halaman error)
+- [x] loader: hilang setelah beberapa detik
+- [x] PWA: tidak ada error instalasi (Chrome non-incognito)
+- [x] PWA: manifest valid & id unik
+- [x] PWA: service worker aktif
+- [x] PWA: SW mengendalikan halaman
+- [x] PWA: halaman terbuka saat OFFLINE
+- [x] PWA: tombol "Pasang Aplikasi" terlihat di menu HP tanpa menunggu event
+- [x] PWA: Chrome mengirim event beforeinstallprompt (bisa dipasang)
+- [x] PWA: kartu "Pasang FUN FITNESS" muncul saat browser siap
+- [x] PWA: tombol Pasang memanggil prompt browser
+- [x] Beranda: section lama "Sedang di gym" sudah dihapus
+- [x] Beranda: tombol Live (FAB) ada di pojok kanan bawah
+- [x] FAB di kanan-bawah layar
+- [x] FAB menampilkan jumlah member sedang di gym (>=5)
+- [x] Panel Live terbuka (role=dialog, aria-expanded=true)
+- [x] Tab "Sedang di gym": daftar member tampil
+- [x] Privasi: member showPublic=false (Citra, Rudi) tidak tampil
+- [x] Tab "Peringkat": top member tampil (<=10)
+- [x] Peringkat terurut menurun
+- [x] Esc menutup panel & fokus kembali ke FAB
+- [x] Footer: "Prototipe sistem & website gym, testing benyoriki.com ↗" + link
+- [x] Data demo: >=20 member, >=40 transaksi, >=300 kunjungan
+- [x] Data demo: semua status transaksi ada (disetujui/menunggu/ditolak/dibatalkan)
+- [x] Data demo: semua status member ada (aktif/akan berakhir/kedaluwarsa/menunggu)
+- [x] Data demo: level Lv1-Lv5 bervariasi
+- [x] Admin: login berhasil, lonceng notifikasi ada
+- [x] Daftar member baru berhasil -> diarahkan ke login
+- [x] Admin menerima notifikasi realtime (badge bertambah)
+- [x] Admin: toast notifikasi muncul
+- [x] Notifikasi: "Member baru mendaftar" & "Pengajuan pembayaran baru"
+- [x] Member: login ke dashboard, status menunggu
+- [x] Member: lonceng ada & notifikasi "Pengajuan diterima"
+- [x] Admin: pembayaran disetujui
+- [x] Masa aktif member bertambah 3 bulan
+- [x] Member menerima toast realtime "Pembayaran disetujui"
+- [x] Dashboard member memuat status aktif & Top 5
+- [x] Check-in admin -> tombol Live di beranda bertambah realtime
+- [x] Panel Live menampilkan "Tester" yang baru check-in
+- [x] Simulasi manual: 7 jenis kejadian berjalan tanpa error
+- [x] Overview: kartu statistik & grafik ter-render
+- [x] Laporan Excel diunduh
+- [x] Laporan PDF diunduh
+- [x] Hapus demo: akun admin tetap ada
+- [x] Hapus demo: semua member/tx demo hilang
+- [x] Hapus demo: data ASLI (tester01) tetap aman
+- [x] Setelah hapus demo & reload: demo TIDAK dimuat ulang
+- [x] Tombol Live hanya menghitung data asli (Tester=1)
+- [x] Teks prototipe + link di login.html
+- [x] Teks prototipe + link di register.html
+- [x] Teks prototipe + link di admin
+- [x] Teks prototipe + link di dashboard member
+- [x] PWA: panduan pasang (fallback) tampil (dites manual: judul tampil kapital via CSS)
+- [x] Simulasi otomatis real-time menghasilkan kejadian baru & bisa dihentikan (jendela 40 detik: data 1082 → 1090)
+
+## Catatan
+- `hero-gym.jpg` dan foto galeri belum diunggah (404 ini sudah ada sebelumnya; galeri otomatis menampilkan Instagram).
+- Klik benyoriki.com di loading screen membuka tab baru ke https://benyoriki.com (sandbox tes tanpa internet, jadi halaman tujuan tidak termuat).
+- Data & notifikasi tersimpan di localStorage browser yang sama; lintas perangkat butuh Firebase (lihat FIREBASE-MIGRATION.md).
+- Belum diuji di HP fisik / Android sungguhan; pemasangan WebAPK bergantung Google Play Services.

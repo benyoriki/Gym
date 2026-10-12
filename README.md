@@ -60,3 +60,12 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - Data lama otomatis dimigrasi (skema v2) tanpa menimpa harga/ubahan admin. Poster berusia sekitar 2 tahun: **konfirmasi harga** lalu ubah di Admin → Paket & Promo bila perlu.
 - **Pratinjau WhatsApp**: `og.jpg` (1200×630, 212 KB) + judul/deskripsi Open Graph di `index.html`. WhatsApp menyimpan pratinjau lama; jika gambar tidak berubah, kirim ulang tautan dengan tambahan `?v=2` atau ganti nama file `og.jpg`. Tombol "Bagikan" memakai pesan di Admin → Pengaturan.
 - **PWA**: `cek-pwa.html` (diagnosis otomatis), tangkapan layar di manifest, strategi cache network-first (versi terbaru saat online, offline tetap jalan), panduan "Cara pasang aplikasi", info pembaruan.
+
+## v9 — PWA, tombol Live, data demo, notifikasi
+- **PWA dapat dipasang**: `manifest.webmanifest` kini punya `id` unik (`/Gym/fun-fitness`, supaya tidak bentrok dengan PWA lain di `benyoriki.github.io`), `display_override`, ikon shortcut. Tombol **Pasang Aplikasi** selalu terlihat (sebelumnya hanya muncul setelah browser mengirim event dan tersembunyi di menu ☰), ada kartu ajakan pasang di beranda, dan panduan otomatis untuk Android / PC / iPhone / browser di dalam aplikasi (WhatsApp, Instagram). `sw.js` v9 memperbaiki respons redirect dan menambah handler klik notifikasi. Cek status di `cek-pwa.html`.
+- **Tombol Live** (`live.js`): bagian "Sedang di gym" diganti tombol melayang kanan-bawah (seperti chat box). Panel punya tab *Sedang di gym* dan *Peringkat* (Bulan ini / Semua waktu). Hanya nama depan + foto member yang mengizinkan.
+- **Data demo** (`demo.js`): 24 member, ±980 kunjungan, 44 transaksi (semua status), notifikasi, log. Semua bertanda `demo:true`.
+- **Notifikasi** (`notif.js`): lonceng di admin & dashboard member, toast realtime lintas tab, notifikasi perangkat (Notification API), badge ikon aplikasi. Notifikasi push dari server sungguhan butuh backend (Firebase Cloud Messaging).
+- **Admin → Uji Coba & Demo** (`sim.js`): simulasi real-time, picu kejadian manual, skenario uji, dan tombol **Hapus data demo, mulai data asli** (data asli & akun admin tidak terhapus).
+- Loading screen memuat "sistem & website benyoriki.com" (tautan tab baru). Teks "Prototipe sistem & website gym, testing benyoriki.com ↗" di footer, login, register, admin, dashboard member.
+- Setelah deploy: Chrome/Android yang sudah pernah membuka situs perlu membuka ulang sekali agar service worker v9 aktif. Jika dulu sudah pernah memasang versi lama, hapus aplikasi lama lalu pasang lagi (ID aplikasi berubah).

@@ -7,11 +7,13 @@
 (function(){var L=document.getElementById('ck'),ev=null;
 function row(s,t,m){var li=document.createElement('li');li.innerHTML='<b class="'+(s==='ok'?'ok':s==='no'?'no':'wa')+'">'+(s==='ok'?'LULUS':s==='no'?'GAGAL':'CEK')+'</b><span><b style="flex:none;display:inline">'+t+'</b><br><span class="mut">'+m+'</span></span>';L.appendChild(li)}
 window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();ev=e;var b=document.getElementById('ins');b.hidden=false;b.onclick=function(){ev.prompt()};row('ok','Browser siap memasang','Event instal diterima: tombol pasang tersedia.')});
+row(/FBAN|FBAV|Instagram|Line\/|MicroMessenger|WhatsApp|TikTok|; wv\)/i.test(navigator.userAgent)?'no':'ok','Jenis browser',/FBAN|FBAV|Instagram|Line\/|MicroMessenger|WhatsApp|TikTok|; wv\)/i.test(navigator.userAgent)?'Browser di dalam aplikasi (WhatsApp/Instagram/dll) tidak bisa memasang. Buka di Chrome/Safari.':'Browser biasa.');
 row(window.isSecureContext?'ok':'no','HTTPS / konteks aman',window.isSecureContext?'Situs dibuka lewat koneksi aman.':'Buka lewat https:// (GitHub Pages). File lokal (file://) tidak bisa PWA.');
 var st=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;row('ok','Mode tampil',st?'Berjalan sebagai aplikasi terpasang.':'Berjalan di tab browser (normal sebelum dipasang).');
 var l=document.querySelector('link[rel=manifest]');
 if(!l){row('no','Manifest','Tautan manifest tidak ditemukan.')}else fetch(l.href).then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(function(m){
 var ic=m.icons||[],has=function(s){return ic.some(function(i){return(i.sizes||'').indexOf(s)>-1})};
+row(m.id&&m.id!=='./'&&m.id!=='/'?'ok':'wa','ID aplikasi unik',(m.id||'(tidak ada)')+' — harus unik agar tidak bentrok dengan aplikasi lain di benyoriki.github.io.');
 row(m.name&&m.short_name?'ok':'no','Nama aplikasi',(m.name||'-')+' / '+(m.short_name||'-'));
 row(m.start_url&&/standalone|minimal-ui|fullscreen/.test(m.display||'')?'ok':'no','Start URL & display',(m.start_url||'-')+' • '+(m.display||'-'));
 row(has('192')&&has('512')?'ok':'no','Ikon 192 & 512','Ditemukan '+ic.length+' ikon.');

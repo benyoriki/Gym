@@ -1,12 +1,17 @@
 {
- "id": "./",
+ "id": "/Gym/fun-fitness",
  "name": "FUN FITNESS",
  "short_name": "FUN FITNESS",
  "description": "FUN FITNESS — gym dan personal training di Kalisuren, Tajur Halang, Bogor. Cek harga, daftar member, dan pantau membership.",
  "lang": "id",
- "start_url": "./index.html",
+ "dir": "ltr",
+ "start_url": "./index.html?source=pwa",
  "scope": "./",
  "display": "standalone",
+ "display_override": [
+  "standalone",
+  "minimal-ui"
+ ],
  "orientation": "any",
  "background_color": "#090B0E",
  "theme_color": "#090B0E",
@@ -33,11 +38,27 @@
  "shortcuts": [
   {
    "name": "Login",
-   "url": "login.html"
+   "short_name": "Login",
+   "url": "login.html",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
   },
   {
    "name": "Daftar Member",
-   "url": "register.html"
+   "short_name": "Daftar",
+   "url": "register.html",
+   "icons": [
+    {
+     "src": "icon-192.png",
+     "sizes": "192x192",
+     "type": "image/png"
+    }
+   ]
   }
  ],
  "categories": [
