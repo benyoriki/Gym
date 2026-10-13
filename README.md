@@ -82,3 +82,17 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - Menu HP muat satu layar (tombol Live & bar bawah disembunyikan saat menu terbuka); footer tidak lagi tertutup tombol Live dan tersusun rapi; form daftar/login lebih ringkas dengan kotak centang bertema.
 - Panel Live menampilkan "Gym sedang tutup" di luar jam buka.
 - Kartu Gym Live: garis detak animasi, efek scan, dan cahaya hero yang mengikuti kursor di PC (hanya transform/opacity, ringan). Transisi halus antarhalaman (View Transitions). Service worker `ff-v11`.
+
+## v12 — Lupa akun & ganti password
+- `lupa.html`: tab **Lupa password** (verifikasi username/email + nomor HP, lalu buat password baru) dan tab **Lupa username / email** (nama lengkap + HP, hasil email disamarkan). Terkunci 5 menit setelah 5 kali gagal; akun admin tidak bisa direset lewat halaman ini; tersedia tombol WhatsApp ke admin.
+- Login punya tautan "Lupa password?" dan "Lupa username / email?", dan terisi otomatis setelah reset.
+- Dashboard member: kartu **Ganti password**. Admin: tombol **Reset password member** di Detail/Edit (password sementara + kirim WhatsApp).
+- Tombol **Kembali ke beranda** kini berwarna (pil merah) di login, daftar, dan lupa akun. Notifikasi + audit log untuk semua reset. Service worker `ff-v12`.
+
+## v13 — Pembayaran QRIS
+- **Alur**: member ajukan paket → lembar **Bayar via QRIS** (kode QR, nominal, tombol Salin nominal & Unduh QRIS) → unggah screenshot bukti → admin menerima notifikasi, melihat bukti, memilih metode (QRIS/Tunai/Transfer) lalu menyetujui → masa aktif bertambah. Alternatif: **Bayar tunai di gym**.
+- Member: banner "Pembayaran belum selesai" + tombol Bayar/Lihat bukti di Riwayat transaksi (`pay.js`). Admin: kolom **Bukti** + penampil bukti di Pembayaran, tombol **Tampilkan QRIS** (kasir), visit harian bisa QRIS atau tunai, dan laporan **Pendapatan via QRIS / tunai**.
+- **Admin → Pengaturan → Pembayaran QRIS**: aktif/nonaktif, nama merchant, NMID, ganti gambar QRIS, atau pakai QRIS bawaan (`qris.webp`, hasil potongan dari QRIS yang diunggah; isi QR diverifikasi identik).
+- Beranda: blok "Bayar mudah via QRIS" (3 langkah) di bagian Paket Membership.
+- Catatan: QRIS statis tidak membawa nominal, jadi member mengetik nominal yang sama; verifikasi tetap manual oleh admin. QRIS bawaan atas nama RIKI HERMAWAN (pengembang) untuk uji coba, **ganti dengan QRIS milik gym sebelum dipakai sungguhan**.
+- Perbaikan: pengingat "membership akan berakhir" di dashboard member sebelumnya tidak pernah tampil, kini tampil. Service worker `ff-v13`.

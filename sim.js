@@ -16,7 +16,7 @@ newMember:function(){return within(function(){var ms=db.list('members'),name,un,
  var res=FF.auth.register({name:name,username:un,email:un+'@contoh.test',phone:'0812'+(10000000+r(89999999)),password:'member123',password2:'member123',pkg:pk.id,agree:true});
  return res.ok?name+' mendaftar dan mengajukan '+pk.name:'Gagal mendaftar: '+JSON.stringify(res)})},
 payRequest:function(){return within(function(){var pend={};db.list('transactions').forEach(function(t){if(t.status==='menunggu')pend[t.memberId]=1});
- var p=demoMems().filter(function(m){return!pend[m.id]&&m.status!=='nonaktif'});if(!p.length)return'Tidak ada member demo yang bisa mengajukan.';var m=pick(p),pk=pick(paks()),t=FF.auth.request(m,pk.id);return t?m.name+' mengajukan '+pk.name:'Gagal membuat pengajuan'})},
+ var p=demoMems().filter(function(m){return!pend[m.id]&&m.status!=='nonaktif'});if(!p.length)return'Tidak ada member demo yang bisa mengajukan.';var m=pick(p),pk=pick(paks()),t=FF.auth.request(m,pk.id),pr=false;if(t&&FF.pay&&Math.random()<.7)pr=FF.pay.submit(t.id,FF.demo.receipt(m.name,pk.name,pk.price));return t?m.name+' mengajukan '+pk.name+(pr?' dan unggah bukti QRIS':''):'Gagal membuat pengajuan'})},
 approve:function(ok){return within(function(){var l=db.list('transactions').filter(function(t){return t.status==='menunggu'&&t.demo});if(!l.length)return'Tidak ada pembayaran demo yang menunggu.';var t=pick(l);
  if(ok!==false)return db.setTx(t.id,'disetujui')?t.memberName+': pembayaran disetujui, masa aktif bertambah':'Gagal memproses '+t.no;
  return db.setTx(t.id,'ditolak','Bukti transfer tidak jelas (simulasi)')?t.memberName+': pembayaran ditolak':'Gagal memproses '+t.no})},

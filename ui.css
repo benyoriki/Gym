@@ -2,8 +2,8 @@
 @font-face{font-family:"Chakra Petch";font-weight:700;font-style:normal;font-display:swap;src:url(cp-700.woff2) format("woff2")}
 @font-face{font-family:"Chakra Petch";font-weight:700;font-style:italic;font-display:swap;src:url(cp-700i.woff2) format("woff2")}
 @font-face{font-family:"Chakra Petch";font-weight:500;font-style:normal;font-display:swap;src:url(cp-500.woff2) format("woff2")}
-:root{--hf:"Chakra Petch","Bahnschrift","Arial Narrow",system-ui,sans-serif;--bg:#EDF0F4;--bg2:#fff;--card:#fff;--card2:#F4F6F9;--pri:#F2402C;--pri2:#D32F1F;--hot:#FF8A3D;--ok:#12B76A;--tx:#0E1218;--tx2:#586273;--bd:#DCE1E8;--r:14px;--glow:rgba(242,64,44,.28);--navbg:rgba(255,255,255,.82);--ease:cubic-bezier(.2,.7,.2,1)}
-[data-theme=dark]{--bg:#07090C;--bg2:#0B0F14;--card:#10151C;--card2:#161C25;--pri:#FF4A36;--pri2:#E0301F;--ok:#2EE59D;--tx:#F2F4F7;--tx2:#8E99A8;--bd:#1F2833;--glow:rgba(255,74,54,.35);--navbg:rgba(7,9,12,.74)}
+:root{--atx:#D32F1F;--hf:"Chakra Petch","Bahnschrift","Arial Narrow",system-ui,sans-serif;--bg:#EDF0F4;--bg2:#fff;--card:#fff;--card2:#F4F6F9;--pri:#F2402C;--pri2:#D32F1F;--hot:#FF8A3D;--ok:#12B76A;--tx:#0E1218;--tx2:#586273;--bd:#DCE1E8;--r:14px;--glow:rgba(242,64,44,.28);--navbg:rgba(255,255,255,.82);--ease:cubic-bezier(.2,.7,.2,1)}
+[data-theme=dark]{--atx:#FF8573;--bg:#07090C;--bg2:#0B0F14;--card:#10151C;--card2:#161C25;--pri:#FF4A36;--pri2:#E0301F;--ok:#2EE59D;--tx:#F2F4F7;--tx2:#8E99A8;--bd:#1F2833;--glow:rgba(255,74,54,.35);--navbg:rgba(7,9,12,.74)}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 h1,h2,h3,h4,.brand span,.price,.btn,.tile b,.stat b,.lm b,.rn,.rv2 b{font-family:var(--hf)}
 ::selection{background:var(--pri);color:#fff}
@@ -154,3 +154,30 @@ input[type=checkbox]{accent-color:var(--pri)}#agree{width:20px!important;height:
 /* admin HP: kartu statistik lebih ringkas */
 @media(max-width:767px){.stat{padding:12px 14px;min-height:0}.stat b{font-size:24px}}
 .nav nav #theme:after{content:"Ganti tema";margin-left:8px;font-size:14px}
+
+/* ===== v12: tombol kembali, lupa akun ===== */
+.back{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:8px 18px 8px 12px;margin:0 0 14px;border:1.5px solid var(--pri);border-radius:99px;background:rgba(255,74,54,.14);color:var(--atx);font-weight:700;font-size:14px;text-decoration:none;transition:background .2s,color .2s,transform .2s}
+.back:hover,.back:focus-visible{background:linear-gradient(135deg,var(--pri),var(--hot));border-color:transparent;color:#fff;transform:translateX(-2px)}.back:active{transform:scale(.97)}
+.lrow{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:-2px 0 14px;font-size:14px}.lrow a{color:var(--atx);font-weight:600;text-underline-offset:3px}
+.seg.full{display:flex;width:100%}.seg.full button{flex:1;padding:9px 6px;font-size:13px;white-space:nowrap}
+.okm{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:rgba(46,229,157,.12);border:1px solid var(--ok);font-size:14px}
+.found{margin-top:14px;padding:14px;border-radius:12px;background:rgba(46,229,157,.1);border:1px solid var(--ok)}.found p{margin:8px 0 12px}.found .btn{margin:0 6px 6px 0}
+.helpbox{display:flex;flex-direction:column;gap:8px;align-items:flex-start;margin:18px 0 6px;padding:14px;border:1px dashed var(--bd);border-radius:12px;background:var(--card2)}.helpbox span{font-size:13px;color:var(--tx2)}
+form[hidden],div[hidden]{display:none!important}
+
+/* ===== v13: pembayaran QRIS ===== */
+.pay{max-width:480px;width:100%;max-height:92vh;overflow:auto;-webkit-overflow-scrolling:touch}
+.payhd{display:flex;flex-direction:column;gap:2px;padding:12px 14px;margin:0 0 12px;border-radius:12px;background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--pri)}
+.payhd span{color:var(--tx2);font-size:14px}.payhd b{font-family:var(--hf);font-size:30px;line-height:1.1;font-style:italic}.payhd small{color:var(--tx2);font-size:12px}
+.qrf{margin:0 0 10px;text-align:center}.qrf img{display:block;width:100%;max-width:300px;height:auto;margin:0 auto 8px;border-radius:18px;background:#fff;box-shadow:0 12px 30px -14px rgba(0,0,0,.6)}.qrf figcaption{font-size:13px;color:var(--tx2);line-height:1.4}.qrf small{font-size:12px}
+.prow{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 12px}
+.pstep{font-size:14px;margin:0 0 12px}.pstep li{margin:6px 0}
+.pprev img{display:block;max-width:100%;max-height:200px;margin-top:8px;border-radius:10px;border:1px solid var(--bd)}.pprev.big img{max-height:60vh;margin:0 auto}
+.pmb{flex-wrap:wrap}.pmb .btn{flex:1 1 auto}
+.howpay{display:grid;grid-template-columns:1fr 1.6fr;gap:18px;align-items:center;margin:0 0 26px;padding:16px 18px;border:1px solid var(--bd);border-radius:var(--r);background:linear-gradient(120deg,rgba(255,74,54,.12),transparent 60%),var(--card)}
+.hw1 b{display:block;font-family:var(--hf);font-style:italic;font-size:22px;text-transform:uppercase}.hw1 span{color:var(--tx2);font-size:14px}
+.howpay ol{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.howpay li{counter-increment:s;position:relative;padding:34px 10px 10px;border-radius:10px;background:var(--card2);font-size:13px;color:var(--tx2)}.howpay li:before{content:counter(s);position:absolute;top:8px;left:10px;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--pri),var(--hot));color:#fff;font:700 13px/22px var(--hf);text-align:center}.howpay li b{display:block;color:var(--tx);font-size:14px}
+@media(max-width:700px){.howpay{grid-template-columns:1fr}.howpay ol{grid-template-columns:1fr}.howpay li{padding:10px 10px 10px 42px}.howpay li:before{top:50%;margin-top:-11px}}
+.qprev{display:block;width:150px;border-radius:12px;margin:6px 0;background:#fff}.subh2{font-family:var(--hf);text-transform:uppercase;margin:18px 0 8px}
+.pay .pmb{position:sticky;bottom:-1px;margin:12px -4px -4px;padding:10px 4px 6px;background:linear-gradient(transparent,var(--card2) 22%)}

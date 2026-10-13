@@ -6,3 +6,9 @@ Semua halaman memakai `FF.db` di `storage.js`. Ganti isi objek ini dengan `Fireb
 4. Persetujuan pembayaran sebaiknya Cloud Function/transaksi atomik.
 5. Audit log ditulis server-side; aktifkan backup/export terjadwal Firestore.
 6. Jangan taruh service account/private key di frontend.
+
+## Lupa password / username (v12)
+Prototipe memverifikasi lewat kombinasi username/email + nomor HP (di browser yang sama) dan mengunci 5 menit setelah 5 kali gagal. Untuk produksi ganti dengan Firebase Authentication: `sendPasswordResetEmail(auth, email)` (tautan reset dikirim ke email), `updatePassword` untuk "Ganti password", dan reset oleh admin lewat Admin SDK / Cloud Function (`auth.updateUser(uid,{password})`). Jangan pernah mengirim password lewat WhatsApp pada sistem produksi; kirim tautan reset.
+
+## QRIS (v13)
+Prototipe memakai QRIS statis + bukti screenshot + verifikasi manual admin. Bukti disimpan sebagai gambar terkompresi di localStorage (batas ±5 MB), pindahkan ke Firebase Storage saat produksi. Untuk verifikasi otomatis gunakan payment gateway yang menyediakan QRIS dinamis dan webhook (mis. Midtrans, Xendit, Duitku): server membuat QR per transaksi (nominal otomatis), gateway memanggil webhook saat dibayar, lalu Cloud Function mengubah transaksi menjadi `disetujui`. QRIS statis tidak bisa dicek otomatis dari website.

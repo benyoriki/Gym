@@ -72,3 +72,9 @@ Diuji di Chromium (Playwright), tampilan HP 390×844 dan desktop 1280×800, jam 
 ## Regresi v11
 - 42 skenario alur lengkap + uji PWA lulus ulang (55 lulus; 1 "gagal" hanyalah pembandingan huruf kapital di skrip tes untuk judul panduan pasang, yang tampil benar).
 - Dicek ulang di HP 390 px: menu, footer, form daftar, kartu Gym Live (jam buka & tutup).
+
+## v12 — Lupa akun (28 skenario lulus)
+Link di login; tombol kembali berwarna; verifikasi gagal; kunci 5 menit setelah 5x gagal; reset berhasil + login terisi otomatis; password lama ditolak; validasi password; notifikasi member & admin; audit log; ganti password member; pencarian username dengan email disamarkan; admin tidak bisa direset lewat form; tombol WhatsApp; reset oleh admin + login dengan password sementara; tanpa error JavaScript.
+
+## v13 — QRIS (28 skenario)
+Blok cara bayar di beranda; banner & tombol bayar member; lembar QRIS (gambar termuat, nominal, merchant, NMID); salin nominal; unggah bukti (wajib, dikompres JPEG); notifikasi admin; kolom & penampil bukti; persetujuan dengan metode; notifikasi member; data demo berisi bukti; pengaturan QRIS (ganti gambar, pulihkan bawaan, nonaktifkan, ubah nama); bayar tunai di gym; visit harian via QRIS + tampilkan QRIS; laporan per metode; simulasi menyertakan bukti. QR hasil potongan diverifikasi terbaca dengan isi identik dengan QRIS asli.
