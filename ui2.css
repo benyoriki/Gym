@@ -1,0 +1,38 @@
+/* ui2.css — lapisan visual v14 (CSS murni, ±3 KB, hanya transform/opacity) */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:radial-gradient(1100px 520px at 85% -8%,var(--glow),transparent 62%),radial-gradient(800px 480px at -10% 105%,rgba(255,138,61,.12),transparent 60%),var(--bg);background-attachment:fixed}
+::selection{background:var(--pri);color:#fff}
+:focus-visible{outline:2px solid var(--hot);outline-offset:2px;border-radius:8px}
+/* kartu kaca + garis gradien */
+.card,.tk>div,.howpay,.gr,[class*=kpi]{position:relative;background:linear-gradient(160deg,color-mix(in srgb,var(--card) 92%,#fff 8%),var(--card));border:1px solid var(--bd);border-radius:var(--r);box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 10px 30px -18px rgba(0,0,0,.7);transition:transform .35s var(--ease),border-color .3s,box-shadow .35s}
+.card:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,var(--pri),transparent 38%,transparent 70%,var(--hot));opacity:.0;transition:opacity .35s;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+@media(hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 18px 40px -20px var(--glow)}.card:hover:before{opacity:.9}}
+/* tombol */
+.btn{transition:transform .2s var(--ease),box-shadow .25s,filter .2s;-webkit-tap-highlight-color:transparent}
+.btn.p{background:linear-gradient(120deg,var(--pri),var(--hot));box-shadow:0 8px 22px -10px var(--glow)}
+.btn:active{transform:scale(.96)}
+@media(hover:hover){.btn.p:hover{filter:brightness(1.08);box-shadow:0 12px 28px -10px var(--glow)}}
+/* judul */
+h1,h2{letter-spacing:-.01em}
+.card h3,#list+h3,main h3{display:flex;align-items:center;gap:8px;margin:26px 0 12px}
+main h3:before{content:"";width:4px;height:1em;border-radius:2px;background:linear-gradient(var(--pri),var(--hot))}
+/* form */
+input,select,textarea{transition:border-color .2s,box-shadow .2s,background .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--pri);box-shadow:0 0 0 3px var(--glow);outline:0}
+/* angka KPI */
+.tk b,[class*=kpi] b{background:linear-gradient(120deg,var(--tx),var(--hot));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+/* tabel: tidak terpotong di HP */
+.card:has(table),.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{font-variant-numeric:tabular-nums}
+tbody tr{transition:background .2s}
+@media(hover:hover){tbody tr:hover{background:color-mix(in srgb,var(--pri) 8%,transparent)}}
+/* badge status: titik berdenyut untuk "aktif" */
+.badge{border-radius:999px;letter-spacing:.02em}
+/* animasi muncul (diatur ui2.js) */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.rv.in{opacity:1;transform:none}
+/* scrollbar tipis */
+*{scrollbar-width:thin;scrollbar-color:var(--pri2) transparent}
+/* HP */
+@media(max-width:600px){.card{border-radius:12px}main h3{margin:20px 0 10px}body{background-attachment:scroll}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}

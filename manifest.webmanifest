@@ -1,8 +1,8 @@
 {
- "id": "/Gym/fun-fitness",
- "name": "FUN FITNESS",
- "short_name": "FUN FITNESS",
- "description": "FUN FITNESS — gym dan personal training di Kalisuren, Tajur Halang, Bogor. Cek harga, daftar member, dan pantau membership.",
+ "id": "/Gym/nama-gym",
+ "name": "Nama GYM",
+ "short_name": "Nama GYM",
+ "description": "Nama GYM — gym dan personal training di Parung, Bogor. Cek harga, daftar member, dan pantau membership.",
  "lang": "id",
  "dir": "ltr",
  "start_url": "./index.html?source=pwa",
@@ -73,7 +73,7 @@
    "sizes": "540x960",
    "type": "image/jpeg",
    "form_factor": "narrow",
-   "label": "Beranda FUN FITNESS"
+   "label": "Beranda Nama GYM"
   },
   {
    "src": "shot-narrow-2.jpg",
@@ -87,7 +87,7 @@
    "sizes": "1280x720",
    "type": "image/jpeg",
    "form_factor": "wide",
-   "label": "Beranda FUN FITNESS di komputer"
+   "label": "Beranda Nama GYM di komputer"
   }
  ]
 }

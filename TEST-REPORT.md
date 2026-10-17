@@ -1,4 +1,4 @@
-# Laporan tes — FUN FITNESS v9
+# Laporan tes — Nama GYM v9
 Diuji di Chromium (Playwright), tampilan HP 390×844 dan desktop 1280×800, jam dibekukan 12.50 WIB.
 
 - [x] loader: teks "sistem & website benyoriki.com"
@@ -12,7 +12,7 @@ Diuji di Chromium (Playwright), tampilan HP 390×844 dan desktop 1280×800, jam 
 - [x] PWA: halaman terbuka saat OFFLINE
 - [x] PWA: tombol "Pasang Aplikasi" terlihat di menu HP tanpa menunggu event
 - [x] PWA: Chrome mengirim event beforeinstallprompt (bisa dipasang)
-- [x] PWA: kartu "Pasang FUN FITNESS" muncul saat browser siap
+- [x] PWA: kartu "Pasang Nama GYM" muncul saat browser siap
 - [x] PWA: tombol Pasang memanggil prompt browser
 - [x] Beranda: section lama "Sedang di gym" sudah dihapus
 - [x] Beranda: tombol Live (FAB) ada di pojok kanan bawah

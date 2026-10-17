@@ -23,6 +23,7 @@ approve:function(ok){return within(function(){var l=db.list('transactions').filt
 visit:function(){return within(function(){var nm=Math.random()<.5?'Tamu '+pick(FN):pick(FN),fee=+db.settings().feeVisit||0;
  db.add('transactions',{no:'VST-'+Date.now().toString(36).toUpperCase(),memberId:'VISIT',memberName:nm,packageId:'visit',packageName:'Visit harian',amount:fee,date:db.today(),method:'Tunai',status:'disetujui',note:'Visit non-member (simulasi)'});
  db.add('visits',{memberId:'VISIT',name:nm,at:new Date().toISOString(),kind:'visit'});db.log('Visit harian (simulasi)',nm);db.notify({to:'admin',type:'tx',title:'Visit harian',text:nm+' membayar visit '+FF.rp(fee)+' (tunai).'});return nm+' visit harian '+FF.rp(fee)})},
+chat:function(){return within(function(){var p=demoMems().filter(function(m){var x=db.status(m);return x==='aktif'||x==='akan berakhir'});if(!p.length)return'Tidak ada member demo aktif.';var m=pick(p),L=['Semangat latihan semua! 💪','Ada yang latihan malam ini?','Mantap hari ini, PR naik! 🔥','Besok leg day, siapa ikut?','Treadmill sebelah kiri kosong nih'];db.add('chat',{memberId:m.id,text:pick(L),at:new Date().toISOString(),r:{}});if(FF.chat)FF.chat.render();return m.name+' mengirim pesan di grup chat'})},
 expiring:function(){return within(function(){var p=demoMems().filter(function(m){return db.status(m)==='aktif'});if(!p.length)return'Tidak ada member demo aktif.';var m=pick(p);db.upd('members',m.id,{end:db.addDays(db.today(),2)});db.checkExpiry();return m.name+': masa aktif disetel 2 hari lagi (notifikasi dikirim)'})}
 };
 function note(msg){hist.unshift({at:new Date().toISOString(),msg:msg});hist=hist.slice(0,12)}
@@ -31,10 +32,10 @@ var SP={slow:[20000,40000],mid:[8000,20000],fast:[3000,8000]};
 function cfg(){var c=db.kget('sim',null);return c&&typeof c==='object'?c:{on:false,speed:'mid'}}
 function refresh(){var v=FF.adminView&&FF.adminView();if(FF.refresh&&(v==='overview'||v==='payments'||v==='sim'||v==='visits'))FF.refresh()}
 var NOOP=/^(Tidak ada|Semua member|Gagal)/;
-function step(){var x=Math.random(),k=x<.45?'checkin':x<.6?'payRequest':x<.78?'approve':x<.88?'visit':x<.95?'newMember':'expiring',msg=A[k](k==='approve'?Math.random()<.85:undefined);
+function step(){var x=Math.random(),k=x<.45?'checkin':x<.6?'payRequest':x<.78?'approve':x<.85?'visit':x<.9?'chat':x<.96?'newMember':'expiring',msg=A[k](k==='approve'?Math.random()<.85:undefined);
  if(NOOP.test(msg)){var fb=['visit','newMember','payRequest'],i=0;while(NOOP.test(msg)&&i<fb.length){msg=A[fb[i++]]()}}note(msg);return msg}
 function loop(){clearTimeout(timer);var c=cfg();if(!c.on)return;var s=SP[c.speed]||SP.mid;timer=setTimeout(function(){step();refresh();loop()},s[0]+r(s[1]-s[0]))}
-var SRC={checkin:'Check-in member',newMember:'Member baru mendaftar',payRequest:'Ajukan pembayaran',approve:'Setujui pembayaran',visit:'Visit harian',expiring:'Masa aktif hampir habis'};
+var SRC={checkin:'Check-in member',newMember:'Member baru mendaftar',payRequest:'Ajukan pembayaran',approve:'Setujui pembayaran',visit:'Visit harian',expiring:'Masa aktif hampir habis',chat:'Pesan di grup chat'};
 function html(){var st=FF.demo.stats(),on=FF.demo.on(),c=cfg(),pend=db.list('transactions').filter(function(t){return t.status==='menunggu'&&t.demo}).length;
  return'<div class="grid"><div class="card"><h3>Mode data</h3><p>'+(on?'<span class="bd y">DATA DEMO AKTIF</span>':'<span class="bd g">MODE DATA ASLI</span>')+'</p>'+
  '<p class="mut">Demo: <b>'+st.members+'</b> member · <b>'+st.tx+'</b> transaksi · <b>'+st.visits+'</b> kunjungan · <b>'+st.notifs+'</b> notifikasi.<br>Data asli: <b>'+st.real.members+'</b> member · <b>'+st.real.tx+'</b> transaksi · <b>'+st.real.visits+'</b> kunjungan.</p>'+

@@ -27,7 +27,7 @@ var STY=X+'<styleSheet xmlns="'+NS+'"><numFmts count="1"><numFmt numFmtId="164" 
 function H(a){return a.map(function(t){return{v:t,s:1}})}
 FF.exp=FF.exp||{};
 FF.exp.xlsx=function(D){
-var sum=[[{v:'FUN FITNESS - Laporan',s:2}],[{v:'Periode: '+D.per+' ('+D.range+')',s:8}],[{v:'Dibuat: '+D.now,s:8}],[],H(['Indikator','Nilai'])];
+var sum=[[{v:'Nama GYM - Laporan',s:2}],[{v:'Periode: '+D.per+' ('+D.range+')',s:8}],[{v:'Dibuat: '+D.now,s:8}],[],H(['Indikator','Nilai'])];
 D.kpi.forEach(function(k){sum.push([{v:k[0],s:7},{v:k[1],s:k[2]?6:9}])});sum.push([],H(['Paket','Jumlah','Total']));
 if(D.by.length)D.by.forEach(function(b){sum.push([{v:b[0],s:3},{v:b[1],s:9},{v:b[2],s:4}])});else sum.push([{v:'Belum ada penjualan terkonfirmasi',s:3}]);sum.push([],H(['Kategori','Jumlah','Total']));D.cat.forEach(function(b){sum.push([{v:b[0],s:3},{v:b[1],s:9},{v:b[2],s:4}])});
 var tx=[H(['No Transaksi','Tanggal','ID Member','Nama','Paket','Nominal','Status','Catatan'])];D.tx.forEach(function(r){tx.push([{v:r[0],s:3},{v:r[1],s:3},{v:r[2],s:3},{v:r[3],s:3},{v:r[4],s:3},{v:r[5],s:4},{v:r[6],s:3},{v:r[7]||'',s:3}])});
@@ -61,7 +61,7 @@ function table(cols,rows){function hd(){rect(36,y,523,20,'#20242A');var x=36;col
 if(y>740)np();hd();if(!rows.length){txt('Tidak ada data pada periode ini',42,y+13,9,0,'#68717D');y+=24}
 rows.forEach(function(r,i){if(y+18>800){np();hd()}if(i%2)rect(36,y,523,18,'#F6F7F9');var x=36;cols.forEach(function(c,j){var v=r[j],col='#20242A',b=0;if(v&&typeof v==='object'){col=v.c||col;b=v.b;v=v.t}txt(fit(v,c.w-12,8.5,b),x+6,y+12.5,8.5,b,col,c.a,c.w-12);x+=c.w});y+=18});y+=16}
 np();rect(0,0,595,72,'#E83B2E');poly([[400,0],[470,0],[430,72],[360,72]],'#CF2929');poly([[480,0],[500,0],[460,72],[440,72]],'#CF2929');
-txt('FUN FITNESS',36,38,24,1,'#FFFFFF');txt('LAPORAN BISNIS',36,56,9,1,'#FFE3DF');
+txt('Nama GYM',36,38,24,1,'#FFFFFF');txt('LAPORAN BISNIS',36,56,9,1,'#FFE3DF');
 txt('Periode: '+D.per,300,34,10,1,'#FFFFFF','r',259);txt(D.range,300,48,9,0,'#FFFFFF','r',259);txt('Dibuat: '+D.now,300,62,8,0,'#FFE3DF','r',259);y=94;
 var bw=(523-30)/4;D.kpi.forEach(function(k,i){var x=36+(i%4)*(bw+10),t=y+Math.floor(i/4)*64;rect(x,t,bw,54,'#F4F6F8');rect(x,t,3,54,'#E83B2E');txt(k[0],x+12,t+18,8,0,'#68717D');txt(k[2]?rp(k[1]):String(k[1]),x+12,t+41,k[2]?13:18,1,'#20242A')});y+=64*Math.ceil(D.kpi.length/4)+10;
 sec('Penjualan per paket (terkonfirmasi)');table([{h:'Paket',w:303},{h:'Jumlah',w:80,a:'r'},{h:'Total',w:140,a:'r'}],D.by.map(function(b){return[b[0],String(b[1]),rp(b[2])]}));
@@ -69,10 +69,10 @@ sec('Pendapatan per kategori');table([{h:'Kategori',w:303},{h:'Jumlah',w:80,a:'r
 table([{h:'No Transaksi',w:100},{h:'Tanggal',w:62},{h:'Member',w:100},{h:'Paket',w:111},{h:'Nominal',w:80,a:'r'},{h:'Status',w:70}],D.tx.map(function(r){return[r[0],r[1],r[3],r[4],rp(r[5]),{t:r[6],c:SC[r[6]],b:1}]}));
 sec('Member yang perlu ditindaklanjuti');var ml=D.members.filter(function(m){return m[6]==='akan berakhir'||m[6]==='kedaluwarsa'});
 table([{h:'ID',w:60},{h:'Nama',w:150},{h:'No HP',w:100},{h:'Berakhir',w:90},{h:'Status',w:123}],ml.map(function(m){return[m[0],m[1],m[2],m[5],{t:m[6],c:m[6]==='kedaluwarsa'?'#D92626':'#b7791f',b:1}]}));
-pages.forEach(function(p,i){P=p;P.push(rgb('#E0E4E9')+' RG 0.5 w 36 40 m 559 40 l S');txt('FUN FITNESS - Laporan dibuat dari data aplikasi demo (localStorage)',36,816,7.5,0,'#68717D');txt('Halaman '+(i+1)+' dari '+pages.length,400,816,7.5,0,'#68717D','r',159)});
+pages.forEach(function(p,i){P=p;P.push(rgb('#E0E4E9')+' RG 0.5 w 36 40 m 559 40 l S');txt('Nama GYM - Laporan dibuat dari data aplikasi demo (localStorage)',36,816,7.5,0,'#68717D');txt('Halaman '+(i+1)+' dari '+pages.length,400,816,7.5,0,'#68717D','r',159)});
 var o=[],i;o.push('<< /Type /Catalog /Pages 2 0 R >>');var kids=[];for(i=0;i<pages.length;i++)kids.push((7+i*2)+' 0 R');
 o.push('<< /Type /Pages /Kids ['+kids.join(' ')+'] /Count '+pages.length+' >>');o.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>');o.push('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>');
-o.push('<< /Title (FUN FITNESS - Laporan) /Producer (FUN FITNESS) >>');
+o.push('<< /Title (Nama GYM - Laporan) /Producer (Nama GYM) >>');
 pages.forEach(function(p,k){var s=p.join('\n');o.push('<< /Length '+s.length+' >>\nstream\n'+s+'\nendstream');o.push('<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents '+(6+k*2)+' 0 R >>')});
 var out='%PDF-1.4\n',off=[];o.forEach(function(b,n){off.push(out.length);out+=(n+1)+' 0 obj\n'+b+'\nendobj\n'});
 var xr=out.length;out+='xref\n0 '+(o.length+1)+'\n0000000000 65535 f \n'+off.map(function(v){return('0000000000'+v).slice(-10)+' 00000 n \n'}).join('')+'trailer\n<< /Size '+(o.length+1)+' /Root 1 0 R /Info 5 0 R >>\nstartxref\n'+xr+'\n%%EOF';

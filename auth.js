@@ -8,6 +8,9 @@ logout:function(){db.log('Logout');db.setSession(null);location.href='login.html
 login:function(id,pw){id=id.trim().toLowerCase();var u=db.list('members').filter(function(m){return m.username.toLowerCase()===id||m.email.toLowerCase()===id})[0];
  if(!u||u.passHash!==db.hash(pw))return'Username/email atau password salah.';if(u.status==='nonaktif')return'Akun dinonaktifkan. Hubungi admin.';
  db.setSession({id:u.id,role:u.role});db.log('Login demo',u.username);location.href=u.role==='admin'?'admin.html':'member.html';return''},
+quick:function(role){var u=db.list('members').filter(function(m){return m.role===role&&m.status!=='nonaktif'&&(role==='admin'||m.username==='budi')})[0]||db.list('members').filter(function(m){return m.role===role&&m.status!=='nonaktif'})[0];
+ if(!u){FF.toast('Akun demo '+role+' tidak ditemukan.','err');return}
+ db.setSession({id:u.id,role:u.role});db.log('Masuk cepat demo',u.username);location.href=role==='admin'?'admin.html':'member.html'},
 register:function(f){var e={},ms=db.list('members');
  if(f.name.trim().length<3)e.name='Nama minimal 3 karakter.';
  if(!/^[a-z0-9_]{4,20}$/i.test(f.username))e.username='Username 4–20 karakter (huruf, angka, _).';else if(ms.some(function(m){return m.username.toLowerCase()===f.username.toLowerCase()}))e.username='Username sudah dipakai.';
@@ -46,6 +49,7 @@ request:function(m,pkId){var p=db.get('packages',pkId);if(!p||p.price==null||!p.
 d.addEventListener('DOMContentLoaded',function(){
 d.querySelectorAll('input[type=password]').forEach(function(i){var b=d.createElement('button');b.type='button';b.className='pwt';b.textContent='Lihat';b.onclick=function(){var h=i.type==='password';i.type=h?'text':'password';b.textContent=h?'Sembunyi':'Lihat'};var w=d.createElement('div');w.className='pwb';i.parentNode.insertBefore(w,i);w.appendChild(i);w.appendChild(b)});
 var lf=d.getElementById('loginForm'),rf=d.getElementById('regForm');
+d.querySelectorAll('[data-quick]').forEach(function(b){b.addEventListener('click',function(){FF.auth.quick(b.getAttribute('data-quick'))})});
 function errs(f,e){f.querySelectorAll('.err').forEach(function(x){x.textContent=''});for(var k in e){var x=f.querySelector('[data-e="'+k+'"]');if(x)x.textContent=e[k];else FF.toast(e[k],'err')}}
 if(lf)lf.addEventListener('submit',function(ev){ev.preventDefault();var b=lf.querySelector('button');if(b.disabled)return;b.disabled=true;b.textContent='Memproses…';
  var r=FF.auth.login(lf.id.value,lf.pw.value);if(r){errs(lf,{form:r});b.disabled=false;b.textContent='Masuk'}});
@@ -63,7 +67,7 @@ if(vf&&nf){var vm=null,vt=0;
   var e=FF.auth.reset(vm.id,nf.np1.value,nf.np2.value);if(e){errs(nf,{form2:e});return}FF.toast('Password berhasil diubah. Silakan login.');var un=vm.username;vm=null;nf.querySelector('button.p').disabled=true;setTimeout(function(){location.href='login.html?u='+encodeURIComponent(un)},1200)})}
 if(uf)uf.addEventListener('submit',function(ev){ev.preventDefault();var r=FF.auth.findAccount(uf.uname.value,uf.uph.value),box=d.getElementById('ur');
  if(r.err){errs(uf,{form:r.err});box.hidden=true;return}errs(uf,{});box.hidden=false;box.innerHTML='<b>Akun ditemukan</b><p>Username: <b>'+FF.esc(r.m.username)+'</b><br>Email: <b>'+FF.esc(FF.auth.mask(r.m.email))+'</b></p><a class="btn p" href="login.html?u='+encodeURIComponent(r.m.username)+'">Login sekarang</a> <a class="btn" href="lupa.html">Lupa password juga?</a>'});
-var hw=d.getElementById('helpwa');if(hw){var st=db.settings(),wu=FF.wa(st[st.waPrimary||'phone1']||st.phone1);if(wu)hw.href=wu+'?text='+encodeURIComponent('Halo admin FUN FITNESS, saya lupa akses akun member dan tidak bisa verifikasi sendiri. Mohon bantuan reset.');else hw.style.display='none'}
+var hw=d.getElementById('helpwa');if(hw){var st=db.settings(),wu=FF.wa(st[st.waPrimary||'phone1']||st.phone1);if(wu)hw.href=wu+'?text='+encodeURIComponent('Halo admin Nama GYM, saya lupa akses akun member dan tidak bisa verifikasi sendiri. Mohon bantuan reset.');else hw.style.display='none'}
 var qu=/[?&]u=([^&]+)/.exec(location.search);if(lf&&qu){lf.id.value=decodeURIComponent(qu[1]);lf.pw.focus()}
 });
 })(window,document);

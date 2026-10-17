@@ -4,3 +4,5 @@ body{background:radial-gradient(circle at 20% 0,rgba(240,68,50,.25),transparent 
 .demo{font-size:13px;background:var(--bg);border:1px dashed var(--bd);border-radius:8px;padding:8px;margin-top:12px}
 .pwt{position:absolute;right:6px;top:30px;border:0;background:none;color:var(--pri);font-weight:700;cursor:pointer;padding:6px}
 .pwb{position:relative}.pwb input{padding-right:84px}.pwt{top:50%;transform:translateY(-50%);right:8px}
+
+.quick{margin-top:16px}.quick .qt{font-size:13px;color:var(--tx2);text-align:center;margin-bottom:8px;font-weight:600}.quick .qb{display:flex;gap:8px}.quick .btn{flex:1;border-color:var(--pri);color:var(--pri)}.quick .btn:hover{background:var(--pri);color:#fff}

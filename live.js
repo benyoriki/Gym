@@ -11,8 +11,8 @@ function onsite(){var cut=Date.now()-HRS*36e5,seen={},ms={},out=[];db.list('memb
 function build(){
  fab=d.createElement('button');fab.id='fab';fab.type='button';fab.className='fab';fab.setAttribute('aria-haspopup','dialog');fab.setAttribute('aria-expanded','false');fab.setAttribute('aria-controls','lv');
  fab.innerHTML='<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg><span class="fc" id="fc">0</span><span class="fl" aria-hidden="true">Live</span>';
- box=d.createElement('section');box.id='lv';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-label','Live di FUN FITNESS');
- box.innerHTML='<div class="lvh"><span class="live"></span><div><b>Live di FUN FITNESS</b><small id="lvs"></small></div><button type="button" class="btn s" id="lvx" aria-label="Tutup">✕</button></div>'+
+ box=d.createElement('section');box.id='lv';box.hidden=true;box.setAttribute('role','dialog');box.setAttribute('aria-label','Live di Nama GYM');
+ box.innerHTML='<div class="lvh"><span class="live"></span><div><b>Live di Nama GYM</b><small id="lvs"></small></div><button type="button" class="btn s" id="lvx" aria-label="Tutup">✕</button></div>'+
  '<div class="lvt" role="tablist"><button type="button" role="tab" id="tOn" aria-selected="true" aria-controls="pOn">Sedang di gym <i id="tOnN">0</i></button><button type="button" role="tab" id="tRk" aria-selected="false" aria-controls="pRk">Peringkat</button></div>'+
  '<div class="lvb" id="pOn" role="tabpanel" aria-labelledby="tOn"></div>'+
  '<div class="lvb" id="pRk" role="tabpanel" aria-labelledby="tRk" hidden><div class="seg sm" role="group" aria-label="Periode"><button type="button" data-p="month" class="on">Bulan ini</button><button type="button" data-p="all">Semua waktu</button></div><div id="rk"></div></div>'+

@@ -1,4 +1,4 @@
-# FUN FITNESS — prototype (statis, GitHub Pages)
+# Nama GYM — prototype (statis, GitHub Pages)
 Struktur **datar**: semua file di root repo (HTML, CSS, JS, gambar). Semua path relatif.
 ## Menjalankan
 Buka `index.html` di browser, atau unggah semua isi folder ke repo GitHub → Settings → Pages → Deploy from branch (root).
@@ -40,11 +40,11 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - Admin: drawer HP punya latar redup dan menutup saat disentuh di luar; angka statistik menghitung naik.
 
 ## v6
-- Logo baru (emblem sayap) di semua tempat: `logo.png`, `favicon.png`, ikon PWA (`icon-192/512/maskable`, `icon-180`), `og.png` (pratinjau WhatsApp). Nama "FUN FITNESS" tampil di navbar, login, sidebar admin, dashboard member, footer, dan loading screen.
+- Logo baru (emblem sayap) di semua tempat: `logo.png`, `favicon.png`, ikon PWA (`icon-192/512/maskable`, `icon-180`), `og.png` (pratinjau WhatsApp). Nama "Nama GYM" tampil di navbar, login, sidebar admin, dashboard member, footer, dan loading screen.
 - Admin → Laporan: **Unduh PDF** (A4, header merah, kartu ringkasan, tabel penjualan/transaksi/member yang perlu ditindaklanjuti) dan **Unduh Excel** (.xlsx asli, 4 sheet: Ringkasan, Transaksi, Member, Kunjungan). Dibuat di browser, tanpa library. Data sesuai filter periode.
 - **PWA**: `manifest.webmanifest`, `sw.js` (cache offline), `pwa.js` (tombol "Pasang Aplikasi"). Syarat: dibuka lewat HTTPS (GitHub Pages sudah HTTPS), bukan file://.
   - Android Chrome: tombol "Pasang Aplikasi" atau menu ⋮ → Instal aplikasi.
-  - Windows 7: gunakan Chrome versi terakhir yang masih mendukung Windows 7 (109) atau Edge setara → menu ⋮ → Instal FUN FITNESS. Firefox desktop tidak mendukung pasang PWA.
+  - Windows 7: gunakan Chrome versi terakhir yang masih mendukung Windows 7 (109) atau Edge setara → menu ⋮ → Instal Nama GYM. Firefox desktop tidak mendukung pasang PWA.
   - iPhone: Safari → Bagikan → Tambah ke Layar Utama.
   - Setelah mengubah file, naikkan `V` di `sw.js` (mis. `ff-v7`) agar pengguna mendapat versi terbaru.
 - Dashboard member: dua kolom di PC; avatar daftar Top 5 tidak lagi lonjong.
@@ -62,7 +62,7 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - **PWA**: `cek-pwa.html` (diagnosis otomatis), tangkapan layar di manifest, strategi cache network-first (versi terbaru saat online, offline tetap jalan), panduan "Cara pasang aplikasi", info pembaruan.
 
 ## v9 — PWA, tombol Live, data demo, notifikasi
-- **PWA dapat dipasang**: `manifest.webmanifest` kini punya `id` unik (`/Gym/fun-fitness`, supaya tidak bentrok dengan PWA lain di `benyoriki.github.io`), `display_override`, ikon shortcut. Tombol **Pasang Aplikasi** selalu terlihat (sebelumnya hanya muncul setelah browser mengirim event dan tersembunyi di menu ☰), ada kartu ajakan pasang di beranda, dan panduan otomatis untuk Android / PC / iPhone / browser di dalam aplikasi (WhatsApp, Instagram). `sw.js` v9 memperbaiki respons redirect dan menambah handler klik notifikasi. Cek status di `cek-pwa.html`.
+- **PWA dapat dipasang**: `manifest.webmanifest` kini punya `id` unik (`/Gym/nama-gym`, supaya tidak bentrok dengan PWA lain di `benyoriki.github.io`), `display_override`, ikon shortcut. Tombol **Pasang Aplikasi** selalu terlihat (sebelumnya hanya muncul setelah browser mengirim event dan tersembunyi di menu ☰), ada kartu ajakan pasang di beranda, dan panduan otomatis untuk Android / PC / iPhone / browser di dalam aplikasi (WhatsApp, Instagram). `sw.js` v9 memperbaiki respons redirect dan menambah handler klik notifikasi. Cek status di `cek-pwa.html`.
 - **Tombol Live** (`live.js`): bagian "Sedang di gym" diganti tombol melayang kanan-bawah (seperti chat box). Panel punya tab *Sedang di gym* dan *Peringkat* (Bulan ini / Semua waktu). Hanya nama depan + foto member yang mengizinkan.
 - **Data demo** (`demo.js`): 24 member, ±980 kunjungan, 44 transaksi (semua status), notifikasi, log. Semua bertanda `demo:true`.
 - **Notifikasi** (`notif.js`): lonceng di admin & dashboard member, toast realtime lintas tab, notifikasi perangkat (Notification API), badge ikon aplikasi. Notifikasi push dari server sungguhan butuh backend (Firebase Cloud Messaging).
@@ -96,3 +96,12 @@ Catatan penting: data paket/promo diedit admin tersimpan di localStorage browser
 - Beranda: blok "Bayar mudah via QRIS" (3 langkah) di bagian Paket Membership.
 - Catatan: QRIS statis tidak membawa nominal, jadi member mengetik nominal yang sama; verifikasi tetap manual oleh admin. QRIS bawaan atas nama RIKI HERMAWAN (pengembang) untuk uji coba, **ganti dengan QRIS milik gym sebelum dipakai sungguhan**.
 - Perbaikan: pengingat "membership akan berakhir" di dashboard member sebelumnya tidak pernah tampil, kini tampil. Service worker `ff-v13`.
+
+## v14 — Nama GYM + Grup Chat (versi uji coba)
+- **Rebrand**: FUN FITNESS menjadi **Nama GYM** di semua halaman, manifest PWA, loading screen, laporan, dan pesan bagikan. Logo, ikon PWA, favicon, `og.jpg`, foto galeri, dan screenshot PWA dibuat ulang dari `228838.png` (logo) dan `228836.png` (banner).
+- **Lokasi**: Parung, Bogor (Jl. Raya Parung, Bogor, Jawa Barat). Tombol Google Maps membuka pencarian "Parung Bogor".
+- **Kontak**: telepon 1/2/3 dan WhatsApp = `+628988995637`. **Media sosial**: Instagram dan Facebook `@benyoriki`.
+- **Harga 50%**: dewasa 2 minggu–12 bulan Rp 50.000 / 75.000 / 200.000 / 350.000 / 600.000; pelajar Rp 37.500 / 62.500 / 175.000 / 300.000 / 500.000; promo 3 bulan Rp 225.000; PT 2 sesi Rp 250.000, PT 5 sesi Rp 450.000; visit Rp 15.000; registrasi Rp 12.500. Browser yang sudah menyimpan data lama dimigrasi otomatis (skema v3); harga yang pernah diubah admin tidak ditimpa.
+- **Grup Chat** (`chat.js`, `chat.css`): tombol **Chat** di beranda, dashboard member, dan admin. **Hanya member (dan admin) yang bisa mengirim pesan**; pengunjung hanya membaca dan melihat ajakan Login/Daftar. Member kedaluwarsa atau nonaktif juga hanya bisa membaca. Fitur: balas (kutipan), reaksi emoji, hapus pesan sendiri, pesan tersemat, indikator mengetik, penanda pesan baru dan badge belum dibaca, admin bisa hapus/sematkan pesan siapa pun.
+- **Data demo 4x**: 96 member, ±4.900 kunjungan, ±184 transaksi, 150 pesan chat. Saat halaman terbuka, member demo ikut mengobrol dan membalas pesan (admin menjawab soal harga/jam/QRIS). Semua bertanda demo dan hilang lewat Admin → Uji Coba & Demo → Hapus data demo.
+- Keterbatasan: seperti bagian lain prototipe ini, chat tersimpan di localStorage browser, jadi belum tersinkron antar perangkat. Untuk chat sungguhan lintas pengguna perlu backend (mis. Firebase Firestore). Service worker `ff-v16`.
