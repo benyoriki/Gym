@@ -1,5 +1,5 @@
 {
- "id": "/Gym/nama-gym",
+ "id": "/Gym/nama-gym-app",
  "name": "Nama GYM",
  "short_name": "Nama GYM",
  "description": "Nama GYM — gym dan personal training di Parung, Bogor. Cek harga, daftar member, dan pantau membership.",
@@ -9,8 +9,7 @@
  "scope": "./",
  "display": "standalone",
  "display_override": [
-  "standalone",
-  "minimal-ui"
+  "standalone"
  ],
  "orientation": "any",
  "background_color": "#090B0E",
